@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\ControlDeck">
+      <UniqueIdentifier>{704b3a3d-74c7-4c4f-b6ed-058a531e832a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\main.cpp">
@@ -21,10 +24,55 @@
     <ClCompile Include="..\..\..\src\Engine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\ControlDeck\Cartridge.cpp">
+      <Filter>Source Files\ControlDeck</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\ControlDeck\CPU.cpp">
+      <Filter>Source Files\ControlDeck</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\ControlDeck\Instruction.cpp">
+      <Filter>Source Files\ControlDeck</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\ControlDeck\PPU.cpp">
+      <Filter>Source Files\ControlDeck</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\Engine.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\ControlDeck\AddressingMode.h">
+      <Filter>Source Files\ControlDeck</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\ControlDeck\Cartridge.h">
+      <Filter>Source Files\ControlDeck</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\ControlDeck\Common.h">
+      <Filter>Source Files\ControlDeck</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\ControlDeck\CPU.h">
+      <Filter>Source Files\ControlDeck</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\ControlDeck\Instruction.h">
+      <Filter>Source Files\ControlDeck</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\ControlDeck\Palette.h">
+      <Filter>Source Files\ControlDeck</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\ControlDeck\PPU.h">
+      <Filter>Source Files\ControlDeck</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\ControlDeck\PPUCtrl.h">
+      <Filter>Source Files\ControlDeck</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\ControlDeck\ProcessorStatusFlags.h">
+      <Filter>Source Files\ControlDeck</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\ControlDeck\Types.h">
+      <Filter>Source Files\ControlDeck</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\ControlDeck\ControlDeck.h">
+      <Filter>Source Files\ControlDeck</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,5 +1,5 @@
 
-#define PSVITA
+//#define PSVITA
 
 #ifdef PSVITA
 #include <psp2/kernel/threadmgr.h>
@@ -9,6 +9,7 @@
 #endif
 
 #include "Engine.h"
+#include "ControlDeck/ControlDeck.h"
 
 #include <sstream>
 #include <vector>
@@ -17,6 +18,9 @@
 
 int main(int argc, char *argv[])
 {
+	GameRemote::ControlDeck controlDeck;
+	controlDeck.Start();
+
 	GameRemote::Engine engine;
 	engine.Start();
 

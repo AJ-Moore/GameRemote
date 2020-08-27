@@ -20,11 +20,16 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 include_directories(
    src/
+   src/ControlDeck/
 )
 
 add_executable(${PROJECT_NAME}
   src/main.cpp
   src/Engine.cpp
+  src/ControlDeck/Cartridge.cpp
+  src/ControlDeck/CPU.cpp
+  src/ControlDeck/Instruction.cpp
+  src/ControlDeck/PPU.cpp
 )
 
 target_link_libraries(${PROJECT_NAME}

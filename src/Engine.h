@@ -1,6 +1,6 @@
 #pragma once
 
-#include <SDL2/SDL.h>
+#include "ControlDeck/Common.h"
 
 namespace GameRemote
 {

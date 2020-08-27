@@ -74,9 +74,9 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <ExecutablePath>C:\Users\Alzon\AppData\Local\Packages\CanonicalGroupLimited.UbuntuonWindows_79rhkp1fndgsc\LocalState\rootfs\usr\local\dev\GameRemote\libraries\dll\win64;$(ExecutablePath)</ExecutablePath>
-    <IncludePath>C:\Users\Alzon\AppData\Local\Packages\CanonicalGroupLimited.UbuntuonWindows_79rhkp1fndgsc\LocalState\rootfs\usr\local\dev\GameRemote\libraries\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\Alzon\AppData\Local\Packages\CanonicalGroupLimited.UbuntuonWindows_79rhkp1fndgsc\LocalState\rootfs\usr\local\dev\GameRemote\libraries\lib\win64;$(LibraryPath)</LibraryPath>
+    <ExecutablePath>$(SolutionDir)..\..\libraries\dll\win64;$(ExecutablePath)</ExecutablePath>
+    <IncludePath>$(SolutionDir)..\..\libraries\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)..\..\libraries\lib\win64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -142,10 +142,25 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\src\ControlDeck\Cartridge.cpp" />
+    <ClCompile Include="..\..\..\src\ControlDeck\CPU.cpp" />
+    <ClCompile Include="..\..\..\src\ControlDeck\Instruction.cpp" />
+    <ClCompile Include="..\..\..\src\ControlDeck\PPU.cpp" />
     <ClCompile Include="..\..\..\src\Engine.cpp" />
     <ClCompile Include="..\..\..\src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\src\ControlDeck\AddressingMode.h" />
+    <ClInclude Include="..\..\..\src\ControlDeck\Cartridge.h" />
+    <ClInclude Include="..\..\..\src\ControlDeck\Common.h" />
+    <ClInclude Include="..\..\..\src\ControlDeck\ControlDeck.h" />
+    <ClInclude Include="..\..\..\src\ControlDeck\CPU.h" />
+    <ClInclude Include="..\..\..\src\ControlDeck\Instruction.h" />
+    <ClInclude Include="..\..\..\src\ControlDeck\Palette.h" />
+    <ClInclude Include="..\..\..\src\ControlDeck\PPU.h" />
+    <ClInclude Include="..\..\..\src\ControlDeck\PPUCtrl.h" />
+    <ClInclude Include="..\..\..\src\ControlDeck\ProcessorStatusFlags.h" />
+    <ClInclude Include="..\..\..\src\ControlDeck\Types.h" />
     <ClInclude Include="..\..\..\src\Engine.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
