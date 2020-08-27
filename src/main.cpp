@@ -5,7 +5,7 @@
 #include <psp2/kernel/threadmgr.h>
 #include <psp2/kernel/processmgr.h>
 
-#define printf psvDebugScreenPrintf
+//#define printf psvDebugScreenPrintf
 #endif
 
 #include "Engine.h"
