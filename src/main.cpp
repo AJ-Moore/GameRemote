@@ -12,19 +12,8 @@
 #include <cstdio>
 #include <iostream>
 
-int main(int argc, char *argv[]) {
-	std::stringstream output;
-	std::vector<std::string> hello = { "Hello" };
-	hello.push_back(",");
-	hello.push_back(" C++ ");
-	hello.push_back("world!");
-	for (auto &s : hello) {
-		// std::cout does't work ATM :(
-		output << s;
-	}
-	output << std::endl;
-	printf("%s\n", output.str().c_str());
-
+int main(int argc, char *argv[])
+{
 	GameRemote::Engine engine;
 	engine.Start();
 
