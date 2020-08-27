@@ -50,7 +50,7 @@ namespace ControlDeck
 
 	void Instruction::AddOperation(uint8 opCode, uint8 bytes, uint8 cycles, uint8 cylesPageBoundary, AdrMode mode)
 	{
-		m_instructions.push_back(std::move(std::make_unique<InstructionInfo>(opCode, bytes, cycles, cylesPageBoundary, mode)));
+		m_instructions.push_back(std::move(make_unique<InstructionInfo>(opCode, bytes, cycles, cylesPageBoundary, mode)));
 	}
 
 	std::vector<uint8> Instruction::GetOpCodes() const
