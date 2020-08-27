@@ -2,6 +2,8 @@
 
 #pragma once
 
+#include <memory>
+
 typedef unsigned char UNSIGNED_BYTE;
 typedef unsigned char ubyte; 
 typedef char byte; 
@@ -12,6 +14,11 @@ typedef short int16;
 typedef unsigned int uint32; 
 typedef int int32; 
 typedef uint32 uint;
+
+template<typename T, typename... Args>
+std::unique_ptr<T> make_unique(Args&&... args) {
+    return std::unique_ptr<T>(new T(std::forward<Args>(args)...));
+}
 
 template <class T>
 using SharedPtr = std::shared_ptr<T>;

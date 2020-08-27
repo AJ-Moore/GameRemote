@@ -319,39 +319,39 @@ namespace ControlDeck {
 		STA->AddOperation(0x91, 2, 6, 0, AdrMode::INDIRECT_INDEXED);
 		AddInstruction(STA);
 
-		SharedPtr<Instruction> STX = std::make_unique<Instruction>("STX", std::bind(&CPU::STX, this, std::placeholders::_1));
+		SharedPtr<Instruction> STX = std::make_shared<Instruction>("STX", std::bind(&CPU::STX, this, std::placeholders::_1));
 		STX->AddOperation(0x86, 2, 3, 0, AdrMode::ZERO_PAGE);
 		STX->AddOperation(0x96, 2, 4, 0, AdrMode::ZERO_PAGEY);
 		STX->AddOperation(0x8E, 3, 4, 0, AdrMode::ABSOLUTE);
 		AddInstruction(STX);
 
-		SharedPtr<Instruction> STY = std::make_unique<Instruction>("STY", std::bind(&CPU::STY, this, std::placeholders::_1));
+		SharedPtr<Instruction> STY = std::make_shared<Instruction>("STY", std::bind(&CPU::STY, this, std::placeholders::_1));
 		STY->AddOperation(0x84, 2, 3, 0, AdrMode::ZERO_PAGE);
 		STY->AddOperation(0x94, 2, 4, 0, AdrMode::ZERO_PAGEX);
 		STY->AddOperation(0x8C, 3, 4, 0, AdrMode::ABSOLUTE);
 		AddInstruction(STY);
 
-		SharedPtr<Instruction> TAX = std::make_unique<Instruction>("TAX", std::bind(&CPU::TAX_$AA, this, std::placeholders::_1));
+		SharedPtr<Instruction> TAX = std::make_shared<Instruction>("TAX", std::bind(&CPU::TAX_$AA, this, std::placeholders::_1));
 		TAX->AddOperation(0xAA, 1, 2, 0, AdrMode::IMPLIED);
 		AddInstruction(TAX);
 
-		SharedPtr<Instruction> TAY = std::make_unique<Instruction>("TAY", std::bind(&CPU::TAY_$A8, this, std::placeholders::_1));
+		SharedPtr<Instruction> TAY = std::make_shared<Instruction>("TAY", std::bind(&CPU::TAY_$A8, this, std::placeholders::_1));
 		TAY->AddOperation(0xA8, 1, 2, 0, AdrMode::IMPLIED);
 		AddInstruction(TAY);
 
-		SharedPtr<Instruction> TSX = std::make_unique<Instruction>("TSX", std::bind(&CPU::TSX_$BA, this, std::placeholders::_1));
+		SharedPtr<Instruction> TSX = std::make_shared<Instruction>("TSX", std::bind(&CPU::TSX_$BA, this, std::placeholders::_1));
 		TSX->AddOperation(0xBA, 1, 2, 0, AdrMode::IMPLIED);
 		AddInstruction(TSX);
 
-		SharedPtr<Instruction> TXA = std::make_unique<Instruction>("TXA", std::bind(&CPU::TXA_$8A, this, std::placeholders::_1));
+		SharedPtr<Instruction> TXA = std::make_shared<Instruction>("TXA", std::bind(&CPU::TXA_$8A, this, std::placeholders::_1));
 		TXA->AddOperation(0x8A, 1, 2, 0, AdrMode::IMPLIED);
 		AddInstruction(TXA);
 
-		SharedPtr<Instruction> TXS = std::make_unique<Instruction>("TXS", std::bind(&CPU::TXS_$9A, this, std::placeholders::_1));
+		SharedPtr<Instruction> TXS = std::make_shared<Instruction>("TXS", std::bind(&CPU::TXS_$9A, this, std::placeholders::_1));
 		TXS->AddOperation(0x9A, 1, 2, 0, AdrMode::IMPLIED);
 		AddInstruction(TXS);
 
-		SharedPtr<Instruction> TYA = std::make_unique<Instruction>("TYA", std::bind(&CPU::TYA_$98, this, std::placeholders::_1));
+		SharedPtr<Instruction> TYA = std::make_shared<Instruction>("TYA", std::bind(&CPU::TYA_$98, this, std::placeholders::_1));
 		TYA->AddOperation(0x98, 1, 2, 0, AdrMode::IMPLIED);
 		AddInstruction(TYA);
 	}

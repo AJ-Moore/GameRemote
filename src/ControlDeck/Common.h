@@ -13,6 +13,7 @@
 #include <string>
 #include <functional>
 #include <cmath>
+#include <memory>
 
 using String = std::string;
 

@@ -48,24 +48,13 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /usr/local/dev/samples/hello_cpp_world
+CMAKE_SOURCE_DIR = /usr/local/dev/GameRemote
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /usr/local/dev/samples/hello_cpp_world
+CMAKE_BINARY_DIR = /usr/local/dev/GameRemote
 
 #=============================================================================
 # Targets provided globally by CMake.
-
-# Special rule for the target rebuild_cache
-rebuild_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	/usr/bin/cmake -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
-.PHONY : rebuild_cache
-
-# Special rule for the target rebuild_cache
-rebuild_cache/fast: rebuild_cache
-
-.PHONY : rebuild_cache/fast
 
 # Special rule for the target edit_cache
 edit_cache:
@@ -78,11 +67,22 @@ edit_cache/fast: edit_cache
 
 .PHONY : edit_cache/fast
 
+# Special rule for the target rebuild_cache
+rebuild_cache:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
+	/usr/bin/cmake -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+.PHONY : rebuild_cache
+
+# Special rule for the target rebuild_cache
+rebuild_cache/fast: rebuild_cache
+
+.PHONY : rebuild_cache/fast
+
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /usr/local/dev/samples/hello_cpp_world/CMakeFiles /usr/local/dev/samples/hello_cpp_world/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /usr/local/dev/GameRemote/CMakeFiles /usr/local/dev/GameRemote/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /usr/local/dev/samples/hello_cpp_world/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /usr/local/dev/GameRemote/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -111,43 +111,178 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named hello_cpp_world.vpk
+# Target rules for targets named redrectangle.vpk
 
 # Build rule for target.
-hello_cpp_world.vpk: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 hello_cpp_world.vpk
-.PHONY : hello_cpp_world.vpk
+redrectangle.vpk: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 redrectangle.vpk
+.PHONY : redrectangle.vpk
 
 # fast build rule for target.
-hello_cpp_world.vpk/fast:
-	$(MAKE) -f CMakeFiles/hello_cpp_world.vpk.dir/build.make CMakeFiles/hello_cpp_world.vpk.dir/build
-.PHONY : hello_cpp_world.vpk/fast
+redrectangle.vpk/fast:
+	$(MAKE) -f CMakeFiles/redrectangle.vpk.dir/build.make CMakeFiles/redrectangle.vpk.dir/build
+.PHONY : redrectangle.vpk/fast
 
 #=============================================================================
-# Target rules for targets named hello_cpp_world.self
+# Target rules for targets named redrectangle.self
 
 # Build rule for target.
-hello_cpp_world.self: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 hello_cpp_world.self
-.PHONY : hello_cpp_world.self
+redrectangle.self: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 redrectangle.self
+.PHONY : redrectangle.self
 
 # fast build rule for target.
-hello_cpp_world.self/fast:
-	$(MAKE) -f CMakeFiles/hello_cpp_world.self.dir/build.make CMakeFiles/hello_cpp_world.self.dir/build
-.PHONY : hello_cpp_world.self/fast
+redrectangle.self/fast:
+	$(MAKE) -f CMakeFiles/redrectangle.self.dir/build.make CMakeFiles/redrectangle.self.dir/build
+.PHONY : redrectangle.self/fast
 
 #=============================================================================
-# Target rules for targets named hello_cpp_world
+# Target rules for targets named redrectangle
 
 # Build rule for target.
-hello_cpp_world: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 hello_cpp_world
-.PHONY : hello_cpp_world
+redrectangle: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 redrectangle
+.PHONY : redrectangle
 
 # fast build rule for target.
-hello_cpp_world/fast:
-	$(MAKE) -f CMakeFiles/hello_cpp_world.dir/build.make CMakeFiles/hello_cpp_world.dir/build
-.PHONY : hello_cpp_world/fast
+redrectangle/fast:
+	$(MAKE) -f CMakeFiles/redrectangle.dir/build.make CMakeFiles/redrectangle.dir/build
+.PHONY : redrectangle/fast
+
+src/ControlDeck/CPU.obj: src/ControlDeck/CPU.cpp.obj
+
+.PHONY : src/ControlDeck/CPU.obj
+
+# target to build an object file
+src/ControlDeck/CPU.cpp.obj:
+	$(MAKE) -f CMakeFiles/redrectangle.dir/build.make CMakeFiles/redrectangle.dir/src/ControlDeck/CPU.cpp.obj
+.PHONY : src/ControlDeck/CPU.cpp.obj
+
+src/ControlDeck/CPU.i: src/ControlDeck/CPU.cpp.i
+
+.PHONY : src/ControlDeck/CPU.i
+
+# target to preprocess a source file
+src/ControlDeck/CPU.cpp.i:
+	$(MAKE) -f CMakeFiles/redrectangle.dir/build.make CMakeFiles/redrectangle.dir/src/ControlDeck/CPU.cpp.i
+.PHONY : src/ControlDeck/CPU.cpp.i
+
+src/ControlDeck/CPU.s: src/ControlDeck/CPU.cpp.s
+
+.PHONY : src/ControlDeck/CPU.s
+
+# target to generate assembly for a file
+src/ControlDeck/CPU.cpp.s:
+	$(MAKE) -f CMakeFiles/redrectangle.dir/build.make CMakeFiles/redrectangle.dir/src/ControlDeck/CPU.cpp.s
+.PHONY : src/ControlDeck/CPU.cpp.s
+
+src/ControlDeck/Cartridge.obj: src/ControlDeck/Cartridge.cpp.obj
+
+.PHONY : src/ControlDeck/Cartridge.obj
+
+# target to build an object file
+src/ControlDeck/Cartridge.cpp.obj:
+	$(MAKE) -f CMakeFiles/redrectangle.dir/build.make CMakeFiles/redrectangle.dir/src/ControlDeck/Cartridge.cpp.obj
+.PHONY : src/ControlDeck/Cartridge.cpp.obj
+
+src/ControlDeck/Cartridge.i: src/ControlDeck/Cartridge.cpp.i
+
+.PHONY : src/ControlDeck/Cartridge.i
+
+# target to preprocess a source file
+src/ControlDeck/Cartridge.cpp.i:
+	$(MAKE) -f CMakeFiles/redrectangle.dir/build.make CMakeFiles/redrectangle.dir/src/ControlDeck/Cartridge.cpp.i
+.PHONY : src/ControlDeck/Cartridge.cpp.i
+
+src/ControlDeck/Cartridge.s: src/ControlDeck/Cartridge.cpp.s
+
+.PHONY : src/ControlDeck/Cartridge.s
+
+# target to generate assembly for a file
+src/ControlDeck/Cartridge.cpp.s:
+	$(MAKE) -f CMakeFiles/redrectangle.dir/build.make CMakeFiles/redrectangle.dir/src/ControlDeck/Cartridge.cpp.s
+.PHONY : src/ControlDeck/Cartridge.cpp.s
+
+src/ControlDeck/Instruction.obj: src/ControlDeck/Instruction.cpp.obj
+
+.PHONY : src/ControlDeck/Instruction.obj
+
+# target to build an object file
+src/ControlDeck/Instruction.cpp.obj:
+	$(MAKE) -f CMakeFiles/redrectangle.dir/build.make CMakeFiles/redrectangle.dir/src/ControlDeck/Instruction.cpp.obj
+.PHONY : src/ControlDeck/Instruction.cpp.obj
+
+src/ControlDeck/Instruction.i: src/ControlDeck/Instruction.cpp.i
+
+.PHONY : src/ControlDeck/Instruction.i
+
+# target to preprocess a source file
+src/ControlDeck/Instruction.cpp.i:
+	$(MAKE) -f CMakeFiles/redrectangle.dir/build.make CMakeFiles/redrectangle.dir/src/ControlDeck/Instruction.cpp.i
+.PHONY : src/ControlDeck/Instruction.cpp.i
+
+src/ControlDeck/Instruction.s: src/ControlDeck/Instruction.cpp.s
+
+.PHONY : src/ControlDeck/Instruction.s
+
+# target to generate assembly for a file
+src/ControlDeck/Instruction.cpp.s:
+	$(MAKE) -f CMakeFiles/redrectangle.dir/build.make CMakeFiles/redrectangle.dir/src/ControlDeck/Instruction.cpp.s
+.PHONY : src/ControlDeck/Instruction.cpp.s
+
+src/ControlDeck/PPU.obj: src/ControlDeck/PPU.cpp.obj
+
+.PHONY : src/ControlDeck/PPU.obj
+
+# target to build an object file
+src/ControlDeck/PPU.cpp.obj:
+	$(MAKE) -f CMakeFiles/redrectangle.dir/build.make CMakeFiles/redrectangle.dir/src/ControlDeck/PPU.cpp.obj
+.PHONY : src/ControlDeck/PPU.cpp.obj
+
+src/ControlDeck/PPU.i: src/ControlDeck/PPU.cpp.i
+
+.PHONY : src/ControlDeck/PPU.i
+
+# target to preprocess a source file
+src/ControlDeck/PPU.cpp.i:
+	$(MAKE) -f CMakeFiles/redrectangle.dir/build.make CMakeFiles/redrectangle.dir/src/ControlDeck/PPU.cpp.i
+.PHONY : src/ControlDeck/PPU.cpp.i
+
+src/ControlDeck/PPU.s: src/ControlDeck/PPU.cpp.s
+
+.PHONY : src/ControlDeck/PPU.s
+
+# target to generate assembly for a file
+src/ControlDeck/PPU.cpp.s:
+	$(MAKE) -f CMakeFiles/redrectangle.dir/build.make CMakeFiles/redrectangle.dir/src/ControlDeck/PPU.cpp.s
+.PHONY : src/ControlDeck/PPU.cpp.s
+
+src/Engine.obj: src/Engine.cpp.obj
+
+.PHONY : src/Engine.obj
+
+# target to build an object file
+src/Engine.cpp.obj:
+	$(MAKE) -f CMakeFiles/redrectangle.dir/build.make CMakeFiles/redrectangle.dir/src/Engine.cpp.obj
+.PHONY : src/Engine.cpp.obj
+
+src/Engine.i: src/Engine.cpp.i
+
+.PHONY : src/Engine.i
+
+# target to preprocess a source file
+src/Engine.cpp.i:
+	$(MAKE) -f CMakeFiles/redrectangle.dir/build.make CMakeFiles/redrectangle.dir/src/Engine.cpp.i
+.PHONY : src/Engine.cpp.i
+
+src/Engine.s: src/Engine.cpp.s
+
+.PHONY : src/Engine.s
+
+# target to generate assembly for a file
+src/Engine.cpp.s:
+	$(MAKE) -f CMakeFiles/redrectangle.dir/build.make CMakeFiles/redrectangle.dir/src/Engine.cpp.s
+.PHONY : src/Engine.cpp.s
 
 src/main.obj: src/main.cpp.obj
 
@@ -155,7 +290,7 @@ src/main.obj: src/main.cpp.obj
 
 # target to build an object file
 src/main.cpp.obj:
-	$(MAKE) -f CMakeFiles/hello_cpp_world.dir/build.make CMakeFiles/hello_cpp_world.dir/src/main.cpp.obj
+	$(MAKE) -f CMakeFiles/redrectangle.dir/build.make CMakeFiles/redrectangle.dir/src/main.cpp.obj
 .PHONY : src/main.cpp.obj
 
 src/main.i: src/main.cpp.i
@@ -164,7 +299,7 @@ src/main.i: src/main.cpp.i
 
 # target to preprocess a source file
 src/main.cpp.i:
-	$(MAKE) -f CMakeFiles/hello_cpp_world.dir/build.make CMakeFiles/hello_cpp_world.dir/src/main.cpp.i
+	$(MAKE) -f CMakeFiles/redrectangle.dir/build.make CMakeFiles/redrectangle.dir/src/main.cpp.i
 .PHONY : src/main.cpp.i
 
 src/main.s: src/main.cpp.s
@@ -173,7 +308,7 @@ src/main.s: src/main.cpp.s
 
 # target to generate assembly for a file
 src/main.cpp.s:
-	$(MAKE) -f CMakeFiles/hello_cpp_world.dir/build.make CMakeFiles/hello_cpp_world.dir/src/main.cpp.s
+	$(MAKE) -f CMakeFiles/redrectangle.dir/build.make CMakeFiles/redrectangle.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
 
 # Help Target
@@ -182,11 +317,26 @@ help:
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
-	@echo "... rebuild_cache"
 	@echo "... edit_cache"
-	@echo "... hello_cpp_world.vpk"
-	@echo "... hello_cpp_world.self"
-	@echo "... hello_cpp_world"
+	@echo "... redrectangle.vpk"
+	@echo "... redrectangle.self"
+	@echo "... rebuild_cache"
+	@echo "... redrectangle"
+	@echo "... src/ControlDeck/CPU.obj"
+	@echo "... src/ControlDeck/CPU.i"
+	@echo "... src/ControlDeck/CPU.s"
+	@echo "... src/ControlDeck/Cartridge.obj"
+	@echo "... src/ControlDeck/Cartridge.i"
+	@echo "... src/ControlDeck/Cartridge.s"
+	@echo "... src/ControlDeck/Instruction.obj"
+	@echo "... src/ControlDeck/Instruction.i"
+	@echo "... src/ControlDeck/Instruction.s"
+	@echo "... src/ControlDeck/PPU.obj"
+	@echo "... src/ControlDeck/PPU.i"
+	@echo "... src/ControlDeck/PPU.s"
+	@echo "... src/Engine.obj"
+	@echo "... src/Engine.i"
+	@echo "... src/Engine.s"
 	@echo "... src/main.obj"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
