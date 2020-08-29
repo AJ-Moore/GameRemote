@@ -3,12 +3,6 @@
 
 namespace ControlDeck
 {
-	Instruction::Instruction(String Name, std::function<void(AdrMode)> Operation) : 
-		m_name(Name),
-		m_operation(Operation)
-	{
-	}
-
 	void Instruction::Execute(uint8 opCode)
 	{
 		const InstructionInfo* info = GetInstructionInfo(opCode);
@@ -35,18 +29,13 @@ namespace ControlDeck
 
 			printff("A:%02X X:%02X Y:%02X P:%02X SP:%02X\n", m_cpu->Accumulator, m_cpu->XReg, m_cpu->YReg, m_cpu->ProcessorStatus, m_cpu->SP);
 #endif
-			m_operation(info->Mode);
+			m_operation->call(info->Mode);
 			m_cpu->m_cycleCounter += info->Cycles;
 		}
 		else
 		{
 			throw("Not implemented");
 		}
-	}
-
-	void Instruction::Bind(std::function<void(AdrMode)> Operation)
-	{
-		m_operation = Operation;
 	}
 
 	void Instruction::AddOperation(uint8 opCode, uint8 bytes, uint8 cycles, uint8 cylesPageBoundary, AdrMode mode)

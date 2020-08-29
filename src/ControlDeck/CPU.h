@@ -96,6 +96,7 @@ class Instruction;
 	class CPU
 	{
 		friend class Instruction;
+		friend class PPU;
 	public:
 		CPU();
 		void Init();

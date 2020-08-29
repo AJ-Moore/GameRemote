@@ -57,6 +57,7 @@ namespace GameRemote
 		
                 cycles = cpu->GetCPUCycles() - prevCPUCycle;
                 prevCPUCycle = cpu->GetCPUCycles();
+                ppu->LoadRegistersFromCPU();
 
                 // 1 cpu cycle = 3 ppu cycles, little hacky for time being.
                 for (uint p = 0; p < cycles * 3; ++p)

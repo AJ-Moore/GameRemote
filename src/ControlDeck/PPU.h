@@ -90,11 +90,10 @@ namespace ControlDeck
 
 		uint GetPPUCycles() const { return m_currentCycle; }
 
-	private:
 		// Copies memory mapped registers between CPU <--> PPU 
 		void LoadRegistersFromCPU();
-		void WriteRegistersToCPU();
 
+	private:
 		uint8 ReadMemory8(uint16 Addr);
 
 
