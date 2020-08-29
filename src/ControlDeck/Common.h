@@ -2,6 +2,15 @@
 
 #pragma once
 
+#ifdef PSVITA
+#include <psp2/kernel/threadmgr.h>
+#include <psp2/kernel/processmgr.h>
+#include "debugScreen.h"
+#define printff psvDebugScreenPrintf
+#else
+#define printff printf
+#endif
+
 #include <iostream>
 #include <string>
 #include <iostream>
@@ -14,6 +23,7 @@
 #include <functional>
 #include <cmath>
 #include <memory>
+
 
 using String = std::string;
 

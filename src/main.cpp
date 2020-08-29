@@ -1,12 +1,6 @@
 
 //#define PSVITA
-
-#ifdef PSVITA
-#include <psp2/kernel/threadmgr.h>
-#include <psp2/kernel/processmgr.h>
-
-//#define printf psvDebugScreenPrintf
-#endif
+#include "ControlDeck/Common.h"
 
 #include "Engine.h"
 #include "ControlDeck/ControlDeck.h"
@@ -14,10 +8,14 @@
 #include <sstream>
 #include <vector>
 #include <cstdio>
-#include <iostream>
 
 int main(int argc, char *argv[])
 {
+#ifdef PSVITA
+	psvDebugScreenInit();
+#endif
+
+    printff("Started!");
 	GameRemote::ControlDeck controlDeck;
 	controlDeck.Start();
 

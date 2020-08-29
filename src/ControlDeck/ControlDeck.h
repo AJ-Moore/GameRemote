@@ -15,7 +15,13 @@ namespace GameRemote
 		void Start()
 		{
             SharedPtr<Cartridge> rom = std::make_shared<Cartridge>();
+
+#ifdef PSVITA
+            rom->Load("app0:kong.nes");
+#else
             rom->Load(".\\kong.nes");
+#endif
+
 
             SharedPtr<CPU> cpu = std::make_shared<CPU>();
             SharedPtr<PPU> ppu = std::make_shared<PPU>(cpu.get());
@@ -23,13 +29,15 @@ namespace GameRemote
 
             if (!ppu->Init())
             {
-                printf("PPU Initialisation failed!");
+                printff("PPU Initialisation failed!\n");
                 return;
             }
             cpu->Init();
-
+	    printff("CPU Initialised.\n");
             // After initailisation load cartridge
+            printff("Loading Cartridge.\n");
             cpu->LoadCartridge(rom.get());
+	    printff("Cartridge Loaded.\n");
 
             bool bRunning = true;
             uint prevCPUCycle = 0;
@@ -46,7 +54,8 @@ namespace GameRemote
                 {
                     cpu->Update();
                 }
-
+		
+		printff("Getting cpu cycles.\n");
                 cycles = cpu->GetCPUCycles() - prevCPUCycle;
                 prevCPUCycle = cpu->GetCPUCycles();
 

@@ -13,7 +13,7 @@ namespace ControlDeck
 
         if (!file.good())
         {
-            printf("Failed to open file");
+            printff("Failed to open file");
             return false;
         }
 
@@ -22,21 +22,21 @@ namespace ControlDeck
         if (file.read(buffer.data(), size))
         {
             // NES
-            printf("Control Deck - A Nintendo Entertainment System Emulator by Allan\n");
-            printf("Loading: %s\n", nesFile.c_str());
-            printf("================================\n");
-            printf("%c", buffer[0]);
-            printf("%c", buffer[1]);
-            printf("%c", buffer[2]);
-            printf("%c\n", buffer[3]);
+            printff("Control Deck - A Nintendo Entertainment System Emulator by Allan\n");
+            printff("Loading: %s\n", nesFile.c_str());
+            printff("================================\n");
+            printff("%c", buffer[0]);
+            printff("%c", buffer[1]);
+            printff("%c", buffer[2]);
+            printff("%c\n", buffer[3]);
 
             // every rom has at least 1 16k 16384 byte rom bank
-            printf("16k PRG Rom Banks: %i\n", buffer[4]);
-            printf("8k CHR VRam Banks: %i\n", buffer[5]);
+            printff("16k PRG Rom Banks: %i\n", buffer[4]);
+            printff("8k CHR VRam Banks: %i\n", buffer[5]);
             //printf("8k Ram Banks: %i\n", buffer[8]);
-            printf("Region pal/ntfc: %s\n", buffer[9] == 0 ? "PAL" : "NTFC");
+            printff("Region pal/ntfc: %s\n", buffer[9] == 0 ? "PAL" : "NTFC");
 
-            printf("Mapper: %i\n", buffer[6] >> 4);
+            printff("Mapper: %i\n", buffer[6] >> 4);
 
             m_prgRomBanks = buffer[4];
             m_chrVRamBanks = buffer[5];
@@ -64,7 +64,7 @@ namespace ControlDeck
             // Load VRAM CHR banks
             for (int i = 0; i < m_chrVRamBanks; ++i)
             {
-                printf("Loading 8k vram CHR Bank [%i]\n", i);
+                printff("Loading 8k vram CHR Bank [%i]\n", i);
                 std::vector<ubyte> bank = std::vector<ubyte>(buffer.begin() + bankOffset,
                                                                     buffer.begin() + (bankOffset + m_vramBankSize));
                 bankOffset += m_vramBankSize;

@@ -79,6 +79,8 @@ $0000
 
 namespace ControlDeck
 {
+
+class Instruction;
 	enum class Controller : uint8
 	{
 		A = 0x1, 

@@ -368,6 +368,7 @@ namespace ControlDeck {
 		//if (ppuCtrl & (uint8)PPUCtrl::VerticalBlanking)
 		if (m_nmi)
 		{
+			printff("Interrupt NMI\n");
 			PushStack16(PC);
 			PushStack8(ProcessorStatus);
 			ppuCtrl &= ~(uint8)PPUCtrl::VerticalBlanking;
@@ -1378,8 +1379,17 @@ namespace ControlDeck {
 	uint16 CPU::GetMemRelative()
 	{
 		PC+=2;
-		uint16 M = PC + (int8)ReadMemory8(PC-1);
-		return M;
+		uint8 M = ReadMemory8(PC-1);
+
+		if (M & 0x80)
+		{
+			M &= ~0x80;
+			return PC - (128 - M);
+		}
+		else
+		{
+			return PC + M;
+		}
 	}
 
 	uint16 CPU::GetMemIndexedIndirect()

@@ -34,7 +34,7 @@ namespace GameRemote
 			return false;
 		}
 
-		m_sdlWindow = SDL_CreateWindow("GameRemote", 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+		m_sdlWindow = SDL_CreateWindow("GameRemote", 0, 0, SCREEN_WIDTHh, SCREEN_HEIGHTt, SDL_WINDOW_SHOWN);
 		m_sdlSurface = SDL_CreateRGBSurface(0, 256, 240, 32, 0xff0000, 0x00ff00, 0x0000ff, 0x0);
 		SDL_FillRect(m_sdlSurface, NULL, 0xff00ff);
 		SDL_UpdateWindowSurface(m_sdlWindow);

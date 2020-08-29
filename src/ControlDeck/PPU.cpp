@@ -16,15 +16,16 @@ namespace ControlDeck
 
 	bool PPU::Init()
 	{
-		if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS) != 0)
+		if (SDL_Init(SDL_INIT_VIDEO) != 0)
 		{
 			return false;
 		}
-
+		
 		m_sdlWindow = SDL_CreateWindow("Control Deck", 0, 0, 960, 544, SDL_WINDOW_SHOWN);
 		m_sdlSurface = SDL_CreateRGBSurface(0,256, 240, 32, 0xff0000, 0x00ff00, 0x0000ff,0x0);
 		SDL_FillRect(m_sdlSurface, NULL, 0x000000);
 		SDL_UpdateWindowSurface(m_sdlWindow);
+		return true;
 	}
 
 	void PPU::Update()

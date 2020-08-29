@@ -5,8 +5,8 @@
 namespace GameRemote
 {
 	enum {
-		SCREEN_WIDTH = 960,
-		SCREEN_HEIGHT = 544
+		SCREEN_WIDTHh = 960,
+		SCREEN_HEIGHTt = 544
 	};
 
 	class Engine
