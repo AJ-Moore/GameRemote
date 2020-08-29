@@ -8,10 +8,10 @@ if(NOT DEFINED CMAKE_TOOLCHAIN_FILE)
   endif()
 endif()
 
-project(redrectangle)
+project(controldeck)
 include("${VITASDK}/share/vita.cmake" REQUIRED)
 
-set(VITA_APP_NAME "Red Rectangle")
+set(VITA_APP_NAME "Control Deck")
 set(VITA_TITLEID  "VSDK00017")
 set(VITA_VERSION  "01.00")
 
@@ -21,6 +21,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 include_directories(
    src/
    src/ControlDeck/
+   ../samples/common/
 )
 
 add_executable(${PROJECT_NAME}
@@ -30,6 +31,7 @@ add_executable(${PROJECT_NAME}
   src/ControlDeck/Instruction.cpp
   src/ControlDeck/CPU.cpp
   src/ControlDeck/PPU.cpp
+  ../samples/common/debugScreen.c
 )
 
 target_link_libraries(${PROJECT_NAME}
@@ -55,5 +57,6 @@ vita_create_vpk(${PROJECT_NAME}.vpk ${VITA_TITLEID} ${PROJECT_NAME}.self
   FILE sce_sys/livearea/contents/bg.png sce_sys/livearea/contents/bg.png
   FILE sce_sys/livearea/contents/startup.png sce_sys/livearea/contents/startup.png
   FILE sce_sys/livearea/contents/template.xml sce_sys/livearea/contents/template.xml
+  FILE kong.nes kong.nes
 )
 

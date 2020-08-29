@@ -368,7 +368,6 @@ namespace ControlDeck {
 		//if (ppuCtrl & (uint8)PPUCtrl::VerticalBlanking)
 		if (m_nmi)
 		{
-			printff("Interrupt NMI\n");
 			PushStack16(PC);
 			PushStack8(ProcessorStatus);
 			ppuCtrl &= ~(uint8)PPUCtrl::VerticalBlanking;
@@ -474,6 +473,32 @@ namespace ControlDeck {
 				}
 				break;
 			}
+		}
+
+#ifdef PSVITA
+		SceCtrlData ctrl;
+		sceCtrlPeekBufferPositive(0, &ctrl, 1);
+
+		SetControllerInput((uint8)Controller::START, ctrl.buttons & SCE_CTRL_START);
+		SetControllerInput((uint8)Controller::SELECT, ctrl.buttons & SCE_CTRL_SELECT);
+		SetControllerInput((uint8)Controller::A, ctrl.buttons & SCE_CTRL_CROSS);
+		SetControllerInput((uint8)Controller::B, ctrl.buttons & SCE_CTRL_CIRCLE);
+		SetControllerInput((uint8)Controller::UP, ctrl.buttons & SCE_CTRL_UP);
+		SetControllerInput((uint8)Controller::DOWN, ctrl.buttons & SCE_CTRL_DOWN);
+		SetControllerInput((uint8)Controller::LEFT, ctrl.buttons & SCE_CTRL_LEFT);
+		SetControllerInput((uint8)Controller::RIGHT, ctrl.buttons & SCE_CTRL_RIGHT);
+#endif
+	}
+
+	void CPU::SetControllerInput(uint8 input, bool down)
+	{
+		if (down)
+		{
+			m_controller1Input |= input;
+		}
+		else
+		{
+			m_controller1Input &= ~input;
 		}
 	}
 

@@ -102,7 +102,8 @@ class Instruction;
 		void CheckForInterrupt();
 		void DebugOutput();
 		void Update();
-		void UpdateInput(); 
+		void UpdateInput();
+		void SetControllerInput(uint8 input, bool down);
 
 		void LoadCartridge(Cartridge* cartridge);
 		void SetPPU(PPU* ppu) { m_ppu = ppu; }

@@ -55,7 +55,6 @@ namespace GameRemote
                     cpu->Update();
                 }
 		
-		printff("Getting cpu cycles.\n");
                 cycles = cpu->GetCPUCycles() - prevCPUCycle;
                 prevCPUCycle = cpu->GetCPUCycles();
 

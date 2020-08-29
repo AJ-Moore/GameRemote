@@ -15,6 +15,7 @@ namespace ControlDeck
 
 		if (m_operation != nullptr)
 		{
+#ifdef DEBUG_PRINT
 			uint8 opCode = m_cpu->ReadMemory8(m_cpu->PC);
 			uint8 byte1 = m_cpu->ReadMemory8(m_cpu->PC + 1);
 			uint8 byte2 = m_cpu->ReadMemory8(m_cpu->PC + 2);
@@ -33,14 +34,14 @@ namespace ControlDeck
 			}
 
 			printff("A:%02X X:%02X Y:%02X P:%02X SP:%02X\n", m_cpu->Accumulator, m_cpu->XReg, m_cpu->YReg, m_cpu->ProcessorStatus, m_cpu->SP);
+#endif
+			m_operation(info->Mode);
+			m_cpu->m_cycleCounter += info->Cycles;
 		}
 		else
 		{
 			throw("Not implemented");
 		}
-
-		m_operation(info->Mode);
-		m_cpu->m_cycleCounter += info->Cycles;
 	}
 
 	void Instruction::Bind(std::function<void(AdrMode)> Operation)

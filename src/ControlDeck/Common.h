@@ -1,10 +1,10 @@
 // Copyright © Allan Moore April 2020
 
 #pragma once
-
 #ifdef PSVITA
 #include <psp2/kernel/threadmgr.h>
 #include <psp2/kernel/processmgr.h>
+#include <psp2/ctrl.h>
 #include "debugScreen.h"
 #define printff psvDebugScreenPrintf
 #else
