@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Common.h"
+#include "../Common.h"
 #include "Cartridge.h"
 #include "CPU.h"
 #include "PPU.h"
@@ -19,7 +19,7 @@ namespace GameRemote
 #ifdef PSVITA
             rom->Load("app0:kong.nes");
 #else
-            rom->Load(".\\kong.nes");
+            rom->Load(".\\Kong.nes");
 #endif
 
 

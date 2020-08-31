@@ -1,1 +1,0 @@
-/usr/local/vitasdk/bin/arm-vita-eabi-g++   -Wl,-q -std=c++11  -Wl,-z,nocopyreloc CMakeFiles/hello_cpp_world.dir/src/main.cpp.obj  -o hello_cpp_world   -L/usr/local/dev/samples/hello_cpp_world  -lSceLibKernel_stub -lstdc++ -lpthread 

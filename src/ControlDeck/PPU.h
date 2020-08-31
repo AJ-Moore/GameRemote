@@ -1,5 +1,5 @@
 #pragma once
-#include "Common.h"
+#include "../Common.h"
 #include "PPUCtrl.h"
 
 //PPU Memory
@@ -119,13 +119,13 @@ namespace ControlDeck
 		SDL_Surface* m_sdlSurface = nullptr;
 
 		// 16 kb address space used by ppu 
-		std::vector<ubyte> m_vram;
+		std::vector<uint8> m_vram;
 
 		// 256 bytes OAM - Object arribute memory, holds 64 sprites, each sprite is 4 bytes
-		std::vector<ubyte> m_primaryOAM;
+		std::vector<uint8> m_primaryOAM;
 
 		// 64 bytes OAM - holds 8 sprites for the current scanline.
-		std::vector<ubyte> m_secondaryOAM;
+		std::vector<uint8> m_secondaryOAM;
 
 		// Number of sprites found for scanline.
 		uint m_totalSprites = 0;

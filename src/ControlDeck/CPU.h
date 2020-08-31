@@ -71,7 +71,7 @@ $0000
 #define CPU_6502_H
 
 #include "AddressingMode.h"
-#include "Common.h"
+#include "../Common.h"
 #include "ProcessorStatusFlags.h"
 #include "Cartridge.h"
 #include "PPU.h"
@@ -189,7 +189,7 @@ class Instruction;
 		bool m_nmi = false;
 
 		//!< RAM - The CPUS memory/ ram 64KB total Address range from $0 - $FFFF
-		std::vector<ubyte> RAM;
+		std::vector<uint8> RAM;
 		
 		//!< PC - Program Counter - Holds the address of the next instruction, split into first 8 bits PCL, last 8 bits PCH
 		uint16 PC = PRGROM_UPPER;

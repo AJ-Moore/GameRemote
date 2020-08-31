@@ -77,12 +77,16 @@
     <ExecutablePath>$(SolutionDir)..\..\libraries\dll\win64;$(ExecutablePath)</ExecutablePath>
     <IncludePath>$(SolutionDir)..\..\libraries\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)..\..\libraries\lib\win64;$(LibraryPath)</LibraryPath>
+    <SourcePath>C:\Users\Alzon\AppData\Local\Packages\CanonicalGroupLimited.UbuntuonWindows_79rhkp1fndgsc\LocalState\rootfs\usr\local\vitasdk\arm-vita-eabi\include;$(SourcePath)</SourcePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
+    <ExecutablePath>$(SolutionDir)..\..\libraries\dll\win64;$(ExecutablePath)</ExecutablePath>
+    <IncludePath>$(SolutionDir)..\..\libraries\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)..\..\libraries\lib\win64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -106,7 +110,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>zlib.lib;zdll.lib;SDL2.lib;SDL2main.lib;Ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -139,6 +143,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>zlib.lib;zdll.lib;SDL2.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -148,11 +153,14 @@
     <ClCompile Include="..\..\..\src\ControlDeck\PPU.cpp" />
     <ClCompile Include="..\..\..\src\Engine.cpp" />
     <ClCompile Include="..\..\..\src\main.cpp" />
+    <ClCompile Include="..\..\..\src\Server.cpp" />
+    <ClCompile Include="..\..\..\src\TCP\TCPClient.cpp" />
+    <ClCompile Include="..\..\..\src\Vita.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\src\Common.h" />
     <ClInclude Include="..\..\..\src\ControlDeck\AddressingMode.h" />
     <ClInclude Include="..\..\..\src\ControlDeck\Cartridge.h" />
-    <ClInclude Include="..\..\..\src\ControlDeck\Common.h" />
     <ClInclude Include="..\..\..\src\ControlDeck\ControlDeck.h" />
     <ClInclude Include="..\..\..\src\ControlDeck\CPU.h" />
     <ClInclude Include="..\..\..\src\ControlDeck\Instruction.h" />
@@ -160,8 +168,12 @@
     <ClInclude Include="..\..\..\src\ControlDeck\PPU.h" />
     <ClInclude Include="..\..\..\src\ControlDeck\PPUCtrl.h" />
     <ClInclude Include="..\..\..\src\ControlDeck\ProcessorStatusFlags.h" />
-    <ClInclude Include="..\..\..\src\ControlDeck\Types.h" />
     <ClInclude Include="..\..\..\src\Engine.h" />
+    <ClInclude Include="..\..\..\src\Server.h" />
+    <ClInclude Include="..\..\..\src\TCP\TCPClient.h" />
+    <ClInclude Include="..\..\..\src\TCP\TCP.h" />
+    <ClInclude Include="..\..\..\src\Types.h" />
+    <ClInclude Include="..\..\..\src\Vita.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,7 +1,7 @@
 // Copyright © Allan Moore April 2020
 #pragma once
 
-#include "Common.h"
+#include "../Common.h"
 
 namespace ControlDeck
 {
@@ -22,8 +22,8 @@ namespace ControlDeck
 	public:
 		Cartridge() = default;
 		bool Load(std::string Path);
-		const std::vector<ubyte>& GetPRGBank(uint16 bankNumber);
-		const std::vector<ubyte>& GetCHRBank(uint16 bankNumber);
+		const std::vector<uint8>& GetPRGBank(uint16 bankNumber);
+		const std::vector<uint8>& GetCHRBank(uint16 bankNumber);
 
 		int GetNumVRamBanks() const { return m_vramBanks.size(); }
 
@@ -37,7 +37,7 @@ namespace ControlDeck
 		uint8 m_flags = 0;
 		std::string m_path;
 
-		std::vector<std::vector<ubyte>> m_romBanks;
-		std::vector<std::vector<ubyte>> m_vramBanks;
+		std::vector<std::vector<uint8>> m_romBanks;
+		std::vector<std::vector<uint8>> m_vramBanks;
 	};
 }

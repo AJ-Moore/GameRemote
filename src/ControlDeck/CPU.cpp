@@ -44,7 +44,7 @@ namespace ControlDeck {
 		ADC->AddOperation(0x69, 2, 2, 0, AdrMode::IMMEDIATE);
 		ADC->AddOperation(0x65, 2, 3, 0, AdrMode::ZERO_PAGE);
 		ADC->AddOperation(0x75, 2, 4, 0, AdrMode::ZERO_PAGEX);
-		ADC->AddOperation(0x6D, 3, 4, 0, AdrMode::ABSOLUTE);
+		ADC->AddOperation(0x6D, 3, 4, 0, AdrMode::ABSOLUTEM);
 		ADC->AddOperation(0x7D, 3, 4, 1, AdrMode::ABSOLUTEX);
 		ADC->AddOperation(0x79, 3, 4, 1, AdrMode::ABSOLUTEY);
 		ADC->AddOperation(0x61, 2, 6, 0, AdrMode::INDEXED_INDIRECT);
@@ -55,7 +55,7 @@ namespace ControlDeck {
 		AND->AddOperation(0x29, 2, 2, 0, AdrMode::IMMEDIATE);
 		AND->AddOperation(0x25, 2, 3, 0, AdrMode::ZERO_PAGE);
 		AND->AddOperation(0x35, 2, 4, 0, AdrMode::ZERO_PAGEX);
-		AND->AddOperation(0x2D, 3, 4, 0, AdrMode::ABSOLUTE);
+		AND->AddOperation(0x2D, 3, 4, 0, AdrMode::ABSOLUTEM);
 		AND->AddOperation(0x3D, 3, 4, 1, AdrMode::ABSOLUTEX);
 		AND->AddOperation(0x39, 3, 4, 1, AdrMode::ABSOLUTEY);
 		AND->AddOperation(0x21, 2, 6, 0, AdrMode::INDEXED_INDIRECT);
@@ -66,45 +66,45 @@ namespace ControlDeck {
 		ASL->AddOperation(0x0A, 1, 2, 0, AdrMode::ACCUMULATOR);
 		ASL->AddOperation(0x06, 2, 5, 0, AdrMode::ZERO_PAGE);
 		ASL->AddOperation(0x16, 2, 6, 0, AdrMode::ZERO_PAGEX);
-		ASL->AddOperation(0x0E, 3, 6, 0, AdrMode::ABSOLUTE);
+		ASL->AddOperation(0x0E, 3, 6, 0, AdrMode::ABSOLUTEM);
 		ASL->AddOperation(0x1E, 3, 7, 0, AdrMode::ABSOLUTEX);
 		AddInstruction(ASL);
 
 		SharedPtr<Instruction> BCC = std::make_shared<Instruction>("BCC", &CPU::BCC_$90, this);
-		BCC->AddOperation(0x90, 2, 2, 0, AdrMode::RELATIVE);
+		BCC->AddOperation(0x90, 2, 2, 0, AdrMode::RELATIVEM);
 		AddInstruction(BCC);
 
 		SharedPtr<Instruction> BCS = std::make_shared<Instruction>("BCS", &CPU::BCS_$B0, this);
-		BCS->AddOperation(0xB0, 2, 2, 0, AdrMode::RELATIVE);
+		BCS->AddOperation(0xB0, 2, 2, 0, AdrMode::RELATIVEM);
 		AddInstruction(BCS);
 
 		SharedPtr<Instruction> BEQ = std::make_shared<Instruction>("BEQ", &CPU::BEQ_$F0, this);
-		BEQ->AddOperation(0xF0, 2, 2, 0, AdrMode::RELATIVE);
+		BEQ->AddOperation(0xF0, 2, 2, 0, AdrMode::RELATIVEM);
 		AddInstruction(BEQ);
 
 		SharedPtr<Instruction> BIT = std::make_shared<Instruction>("BIT", &CPU::BIT, this);
 		BIT->AddOperation(0x24, 2, 3, 0, AdrMode::ZERO_PAGE);
-		BIT->AddOperation(0x2C, 3, 3, 0, AdrMode::ABSOLUTE);
+		BIT->AddOperation(0x2C, 3, 3, 0, AdrMode::ABSOLUTEM);
 		AddInstruction(BIT);
 
 		SharedPtr<Instruction> BMI = std::make_shared<Instruction>("BMI", &CPU::BMI_$30, this);
-		BMI->AddOperation(0x30, 2, 2, 0, AdrMode::RELATIVE);
+		BMI->AddOperation(0x30, 2, 2, 0, AdrMode::RELATIVEM);
 		AddInstruction(BMI);
 
 		SharedPtr<Instruction> BNE = std::make_shared<Instruction>("BNE", &CPU::BNE_D0, this);
-		BNE->AddOperation(0xD0, 2, 2, 0, AdrMode::RELATIVE);
+		BNE->AddOperation(0xD0, 2, 2, 0, AdrMode::RELATIVEM);
 		AddInstruction(BNE);
 
 		SharedPtr<Instruction> BPL = std::make_shared<Instruction>("BPL", &CPU::BPL_$10, this);
-		BPL->AddOperation(0x10, 2, 2, 0, AdrMode::RELATIVE);
+		BPL->AddOperation(0x10, 2, 2, 0, AdrMode::RELATIVEM);
 		AddInstruction(BPL);
 
 		SharedPtr<Instruction> BVC = std::make_shared<Instruction>("BVC", &CPU::BVC_$50, this);
-		BVC->AddOperation(0x50, 2, 2, 0, AdrMode::RELATIVE);
+		BVC->AddOperation(0x50, 2, 2, 0, AdrMode::RELATIVEM);
 		AddInstruction(BVC);
 
 		SharedPtr<Instruction> BVS = std::make_shared<Instruction>("BVS", &CPU::BVS_$70, this);	
-		BVS->AddOperation(0x70, 2, 2, 0, AdrMode::RELATIVE);
+		BVS->AddOperation(0x70, 2, 2, 0, AdrMode::RELATIVEM);
 		AddInstruction(BVS);
 
 		SharedPtr<Instruction> CLC = std::make_shared<Instruction>("CLC", &CPU::CLC_$18, this);
@@ -127,7 +127,7 @@ namespace ControlDeck {
 		CMP->AddOperation(0xC9, 2, 2, 0, AdrMode::IMMEDIATE);
 		CMP->AddOperation(0xC5, 2, 3, 0, AdrMode::ZERO_PAGE);
 		CMP->AddOperation(0xD5, 2, 4, 0, AdrMode::ZERO_PAGEX);
-		CMP->AddOperation(0xCD, 3, 4, 0, AdrMode::ABSOLUTE);
+		CMP->AddOperation(0xCD, 3, 4, 0, AdrMode::ABSOLUTEM);
 		CMP->AddOperation(0xDD, 3, 4, 1, AdrMode::ABSOLUTEX);
 		CMP->AddOperation(0xD9, 3, 4, 1, AdrMode::ABSOLUTEY);
 		CMP->AddOperation(0xC1, 2, 6, 0, AdrMode::INDEXED_INDIRECT);
@@ -137,19 +137,19 @@ namespace ControlDeck {
 		SharedPtr<Instruction> CPX = std::make_shared<Instruction>("CPX", &CPU::CPX, this);
 		CPX->AddOperation(0xE0, 2, 2, 0, AdrMode::IMMEDIATE);
 		CPX->AddOperation(0xE4, 2, 3, 0, AdrMode::ZERO_PAGE);
-		CPX->AddOperation(0xEC, 3, 4, 0, AdrMode::ABSOLUTE);
+		CPX->AddOperation(0xEC, 3, 4, 0, AdrMode::ABSOLUTEM);
 		AddInstruction(CPX);
 
 		SharedPtr<Instruction> CPY = std::make_shared<Instruction>("CPY", &CPU::CPY, this);
 		CPY->AddOperation(0xC0, 2, 2, 0, AdrMode::IMMEDIATE);
 		CPY->AddOperation(0xC4, 2, 3, 0, AdrMode::ZERO_PAGE);
-		CPY->AddOperation(0xCC, 3, 4, 0, AdrMode::ABSOLUTE);
+		CPY->AddOperation(0xCC, 3, 4, 0, AdrMode::ABSOLUTEM);
 		AddInstruction(CPY);
 
 		SharedPtr<Instruction> DEC = std::make_shared<Instruction>("DEC", &CPU::DEC, this);
 		DEC->AddOperation(0xC6, 2, 5, 0, AdrMode::ZERO_PAGE);
 		DEC->AddOperation(0xD6, 2, 6, 0, AdrMode::ZERO_PAGEX);
-		DEC->AddOperation(0xCE, 3, 6, 0, AdrMode::ABSOLUTE);
+		DEC->AddOperation(0xCE, 3, 6, 0, AdrMode::ABSOLUTEM);
 		DEC->AddOperation(0xDE, 3, 7, 0, AdrMode::ABSOLUTEX);
 		AddInstruction(DEC);
 
@@ -165,7 +165,7 @@ namespace ControlDeck {
 		EOR->AddOperation(0x49, 2, 2, 0, AdrMode::IMMEDIATE);
 		EOR->AddOperation(0x45, 2, 3, 0, AdrMode::ZERO_PAGE);
 		EOR->AddOperation(0x55, 2, 4, 0, AdrMode::ZERO_PAGEX);
-		EOR->AddOperation(0x4D, 3, 4, 0, AdrMode::ABSOLUTE);
+		EOR->AddOperation(0x4D, 3, 4, 0, AdrMode::ABSOLUTEM);
 		EOR->AddOperation(0x5D, 3, 4, 1, AdrMode::ABSOLUTEX);
 		EOR->AddOperation(0x59, 3, 4, 1, AdrMode::ABSOLUTEY);
 		EOR->AddOperation(0x41, 2, 6, 0, AdrMode::INDEXED_INDIRECT);
@@ -175,7 +175,7 @@ namespace ControlDeck {
 		SharedPtr<Instruction> INC = std::make_shared<Instruction>("INC", &CPU::INC, this);
 		INC->AddOperation(0xE6, 2, 2, 0, AdrMode::ZERO_PAGE);
 		INC->AddOperation(0xF6, 2, 3, 0, AdrMode::ZERO_PAGE);
-		INC->AddOperation(0xEE, 2, 4, 0, AdrMode::ABSOLUTE);
+		INC->AddOperation(0xEE, 2, 4, 0, AdrMode::ABSOLUTEM);
 		INC->AddOperation(0xFE, 3, 4, 0, AdrMode::ABSOLUTEX);
 		AddInstruction(INC);
 
@@ -188,19 +188,19 @@ namespace ControlDeck {
 		AddInstruction(INY);
 
 		SharedPtr<Instruction> JMP = std::make_shared<Instruction>("JMP", &CPU::JMP, this);
-		JMP->AddOperation(0x4C, 3, 3, 0, AdrMode::ABSOLUTE);
+		JMP->AddOperation(0x4C, 3, 3, 0, AdrMode::ABSOLUTEM);
 		JMP->AddOperation(0x6C, 3, 5, 0, AdrMode::ABSOLUTE_INDIRECT);
 		AddInstruction(JMP);
 
 		SharedPtr<Instruction> JSR = std::make_shared<Instruction>("JSR", &CPU::JSR_$20, this);
-		JSR->AddOperation(0x20, 3, 6, 0, AdrMode::ABSOLUTE);
+		JSR->AddOperation(0x20, 3, 6, 0, AdrMode::ABSOLUTEM);
 		AddInstruction(JSR);
 
 		SharedPtr<Instruction> LDA = std::make_shared<Instruction>("LDA", &CPU::LDA, this);
 		LDA->AddOperation(0xA9, 2, 2, 0, AdrMode::IMMEDIATE);
 		LDA->AddOperation(0xA5, 2, 3, 0, AdrMode::ZERO_PAGE);
 		LDA->AddOperation(0xB5, 2, 4, 0, AdrMode::ZERO_PAGEX);
-		LDA->AddOperation(0xAD, 3, 4, 0, AdrMode::ABSOLUTE);
+		LDA->AddOperation(0xAD, 3, 4, 0, AdrMode::ABSOLUTEM);
 		LDA->AddOperation(0xBD, 3, 4, 1, AdrMode::ABSOLUTEX);
 		LDA->AddOperation(0xB9, 3, 4, 1, AdrMode::ABSOLUTEY);
 		LDA->AddOperation(0xA1, 2, 6, 0, AdrMode::INDEXED_INDIRECT);
@@ -211,7 +211,7 @@ namespace ControlDeck {
 		LDX->AddOperation(0xA2, 2, 2, 0, AdrMode::IMMEDIATE);
 		LDX->AddOperation(0xA6, 2, 3, 0, AdrMode::ZERO_PAGE);
 		LDX->AddOperation(0xB6, 2, 4, 0, AdrMode::ZERO_PAGEY);
-		LDX->AddOperation(0xAE, 3, 4, 0, AdrMode::ABSOLUTE);
+		LDX->AddOperation(0xAE, 3, 4, 0, AdrMode::ABSOLUTEM);
 		LDX->AddOperation(0xBE, 3, 4, 1, AdrMode::ABSOLUTEY);
 		AddInstruction(LDX);
 
@@ -219,7 +219,7 @@ namespace ControlDeck {
 		LDY->AddOperation(0xA0, 2, 2, 0, AdrMode::IMMEDIATE);
 		LDY->AddOperation(0xA4, 2, 3, 0, AdrMode::ZERO_PAGE);
 		LDY->AddOperation(0xB4, 2, 4, 0, AdrMode::ZERO_PAGEX);
-		LDY->AddOperation(0xAC, 3, 4, 0, AdrMode::ABSOLUTE);
+		LDY->AddOperation(0xAC, 3, 4, 0, AdrMode::ABSOLUTEM);
 		LDY->AddOperation(0xBC, 3, 4, 1, AdrMode::ABSOLUTEX);
 		AddInstruction(LDY);
 
@@ -227,7 +227,7 @@ namespace ControlDeck {
 		LSR->AddOperation(0x4A, 1, 2, 0, AdrMode::ACCUMULATOR);
 		LSR->AddOperation(0x46, 2, 5, 0, AdrMode::ZERO_PAGE);
 		LSR->AddOperation(0x56, 2, 6, 0, AdrMode::ZERO_PAGEX);
-		LSR->AddOperation(0x4E, 3, 6, 0, AdrMode::ABSOLUTE);
+		LSR->AddOperation(0x4E, 3, 6, 0, AdrMode::ABSOLUTEM);
 		LSR->AddOperation(0x5E, 3, 7, 1, AdrMode::ABSOLUTEX);
 		AddInstruction(LSR);
 
@@ -239,7 +239,7 @@ namespace ControlDeck {
 		ORA->AddOperation(0x09, 2, 2, 0, AdrMode::IMMEDIATE);
 		ORA->AddOperation(0x05, 2, 3, 0, AdrMode::ZERO_PAGE);
 		ORA->AddOperation(0x15, 2, 4, 0, AdrMode::ZERO_PAGEX);
-		ORA->AddOperation(0x0D, 3, 4, 0, AdrMode::ABSOLUTE);
+		ORA->AddOperation(0x0D, 3, 4, 0, AdrMode::ABSOLUTEM);
 		ORA->AddOperation(0x1D, 3, 4, 1, AdrMode::ABSOLUTEX);
 		ORA->AddOperation(0x19, 3, 4, 1, AdrMode::ABSOLUTEY);
 		ORA->AddOperation(0x01, 2, 6, 0, AdrMode::INDEXED_INDIRECT);
@@ -266,7 +266,7 @@ namespace ControlDeck {
 		ROL->AddOperation(0x2A, 1, 2, 0, AdrMode::ACCUMULATOR);
 		ROL->AddOperation(0x26, 2, 5, 0, AdrMode::ZERO_PAGE);
 		ROL->AddOperation(0x36, 2, 6, 0, AdrMode::ZERO_PAGEX);
-		ROL->AddOperation(0x2E, 3, 6, 0, AdrMode::ABSOLUTE);
+		ROL->AddOperation(0x2E, 3, 6, 0, AdrMode::ABSOLUTEM);
 		ROL->AddOperation(0x3E, 3, 7, 1, AdrMode::ABSOLUTEX);
 		AddInstruction(ROL);
 
@@ -274,7 +274,7 @@ namespace ControlDeck {
 		ROR->AddOperation(0x6A, 1, 2, 0, AdrMode::ACCUMULATOR);
 		ROR->AddOperation(0x66, 2, 5, 0, AdrMode::ZERO_PAGE);
 		ROR->AddOperation(0x76, 2, 6, 0, AdrMode::ZERO_PAGEX);
-		ROR->AddOperation(0x6E, 3, 6, 0, AdrMode::ABSOLUTE);
+		ROR->AddOperation(0x6E, 3, 6, 0, AdrMode::ABSOLUTEM);
 		ROR->AddOperation(0x7E, 3, 7, 1, AdrMode::ABSOLUTEX);
 		AddInstruction(ROR);
 
@@ -290,7 +290,7 @@ namespace ControlDeck {
 		SBC->AddOperation(0xE9, 2, 2, 0, AdrMode::IMMEDIATE);
 		SBC->AddOperation(0xE5, 2, 3, 0, AdrMode::ZERO_PAGE);
 		SBC->AddOperation(0xF5, 2, 4, 0, AdrMode::ZERO_PAGEX);
-		SBC->AddOperation(0xED, 3, 4, 0, AdrMode::ABSOLUTE);
+		SBC->AddOperation(0xED, 3, 4, 0, AdrMode::ABSOLUTEM);
 		SBC->AddOperation(0xFD, 3, 4, 1, AdrMode::ABSOLUTEX);
 		SBC->AddOperation(0xF9, 3, 4, 1, AdrMode::ABSOLUTEY);
 		SBC->AddOperation(0xE1, 2, 6, 0, AdrMode::INDEXED_INDIRECT);
@@ -312,7 +312,7 @@ namespace ControlDeck {
 		SharedPtr<Instruction> STA = std::make_shared<Instruction>("STA", &CPU::STA, this);
 		STA->AddOperation(0x85, 2, 3, 0, AdrMode::ZERO_PAGE);
 		STA->AddOperation(0x95, 2, 4, 0, AdrMode::ZERO_PAGEX);
-		STA->AddOperation(0x8D, 3, 4, 0, AdrMode::ABSOLUTE);
+		STA->AddOperation(0x8D, 3, 4, 0, AdrMode::ABSOLUTEM);
 		STA->AddOperation(0x9D, 3, 5, 0, AdrMode::ABSOLUTEX);
 		STA->AddOperation(0x99, 3, 5, 0, AdrMode::ABSOLUTEY);
 		STA->AddOperation(0x81, 2, 6, 0, AdrMode::INDEXED_INDIRECT);
@@ -322,13 +322,13 @@ namespace ControlDeck {
 		SharedPtr<Instruction> STX = std::make_shared<Instruction>("STX", &CPU::STX, this);
 		STX->AddOperation(0x86, 2, 3, 0, AdrMode::ZERO_PAGE);
 		STX->AddOperation(0x96, 2, 4, 0, AdrMode::ZERO_PAGEY);
-		STX->AddOperation(0x8E, 3, 4, 0, AdrMode::ABSOLUTE);
+		STX->AddOperation(0x8E, 3, 4, 0, AdrMode::ABSOLUTEM);
 		AddInstruction(STX);
 
 		SharedPtr<Instruction> STY = std::make_shared<Instruction>("STY", &CPU::STY, this);
 		STY->AddOperation(0x84, 2, 3, 0, AdrMode::ZERO_PAGE);
 		STY->AddOperation(0x94, 2, 4, 0, AdrMode::ZERO_PAGEX);
-		STY->AddOperation(0x8C, 3, 4, 0, AdrMode::ABSOLUTE);
+		STY->AddOperation(0x8C, 3, 4, 0, AdrMode::ABSOLUTEM);
 		AddInstruction(STY);
 
 		SharedPtr<Instruction> TAX = std::make_shared<Instruction>("TAX", &CPU::TAX_$AA, this);
@@ -508,8 +508,8 @@ namespace ControlDeck {
 
 		m_loadedCartridge = cartridge;
 
-		const std::vector<ubyte> bank0 = cartridge->GetPRGBank(0);
-		const std::vector<ubyte> bank1 = cartridge->GetPRGBank(1);
+		const std::vector<uint8> bank0 = cartridge->GetPRGBank(0);
+		const std::vector<uint8> bank1 = cartridge->GetPRGBank(1);
 
 		for (int i = 0; i < bank0.size(); ++i)
 		{
@@ -520,7 +520,7 @@ namespace ControlDeck {
 		// load pattern tables into PPU
 		if (cartridge->GetNumVRamBanks() > 0)
 		{
-			const std::vector<ubyte> vrambank0 = cartridge->GetCHRBank(0);
+			const std::vector<uint8> vrambank0 = cartridge->GetCHRBank(0);
 
 			for (int i = 0; i < vrambank0.size(); ++i)
 			{
@@ -530,7 +530,7 @@ namespace ControlDeck {
 
 		if (cartridge->GetNumVRamBanks() > 1)
 		{
-			const std::vector<ubyte> vrambank1 = cartridge->GetCHRBank(1);
+			const std::vector<uint8> vrambank1 = cartridge->GetCHRBank(1);
 			for (int i = 0; i < vrambank1.size(); ++i)
 			{
 				m_ppu->WriteMemory8(0x1FFF + i, vrambank1[i]);
@@ -1303,12 +1303,12 @@ namespace ControlDeck {
 		case AdrMode::ZERO_PAGE: return GetMemZeroPage();
 		case AdrMode::ZERO_PAGEX: return GetMemZeroPageX();
 		case AdrMode::ZERO_PAGEY: return GetMemZeroPageY();
-		case AdrMode::ABSOLUTE: return GetMemAbsolute();
+		case AdrMode::ABSOLUTEM: return GetMemAbsolute();
 		case AdrMode::ABSOLUTEX: return GetMemAbsoluteX();
 		case AdrMode::ABSOLUTEY: return GetMemAbsoluteY();
 		case AdrMode::ABSOLUTE_INDIRECT: return GetMemAbsoluteIndirect();
 		case AdrMode::IMMEDIATE: return GetMemImmediate();
-		case AdrMode::RELATIVE: return GetMemRelative();
+		case AdrMode::RELATIVEM: return GetMemRelative();
 		case AdrMode::INDEXED_INDIRECT: return GetMemIndexedIndirect();
 		case AdrMode::INDIRECT_INDEXED: return GetMemIndirectIndexed();
 		default:

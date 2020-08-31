@@ -16,6 +16,9 @@
     <Filter Include="Source Files\ControlDeck">
       <UniqueIdentifier>{704b3a3d-74c7-4c4f-b6ed-058a531e832a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\TCP">
+      <UniqueIdentifier>{5407ef4d-db82-4a53-9551-e7bbad73efda}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\main.cpp">
@@ -36,6 +39,15 @@
     <ClCompile Include="..\..\..\src\ControlDeck\PPU.cpp">
       <Filter>Source Files\ControlDeck</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\Vita.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Server.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\TCP\TCPClient.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\Engine.h">
@@ -45,9 +57,6 @@
       <Filter>Source Files\ControlDeck</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\ControlDeck\Cartridge.h">
-      <Filter>Source Files\ControlDeck</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\ControlDeck\Common.h">
       <Filter>Source Files\ControlDeck</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\ControlDeck\CPU.h">
@@ -68,11 +77,26 @@
     <ClInclude Include="..\..\..\src\ControlDeck\ProcessorStatusFlags.h">
       <Filter>Source Files\ControlDeck</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\ControlDeck\Types.h">
-      <Filter>Source Files\ControlDeck</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\src\ControlDeck\ControlDeck.h">
       <Filter>Source Files\ControlDeck</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\TCP\TCP.h">
+      <Filter>Source Files\TCP</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Vita.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Server.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\TCP\TCPClient.h">
+      <Filter>Source Files\TCP</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Common.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Types.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

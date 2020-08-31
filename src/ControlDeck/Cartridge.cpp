@@ -48,7 +48,7 @@ namespace ControlDeck
             for (int i = 0; i < m_prgRomBanks; ++i)
             {
                 printf("Loading 16k rom bank [%i]\n", i);
-                std::vector<ubyte> bank = std::vector<ubyte>(buffer.begin() + bankOffset, 
+                std::vector<uint8> bank = std::vector<uint8>(buffer.begin() + bankOffset, 
                                                             buffer.begin() + (bankOffset + m_romBankSize));
                 bankOffset += m_romBankSize;
                 m_romBanks.push_back(bank);
@@ -56,7 +56,7 @@ namespace ControlDeck
 
             if (m_prgRomBanks == 1)
             {
-                m_romBanks.push_back(std::vector<ubyte>(m_romBanks[0]));
+                m_romBanks.push_back(std::vector<uint8>(m_romBanks[0]));
             }
 
             m_vramBanks.clear();
@@ -65,7 +65,7 @@ namespace ControlDeck
             for (int i = 0; i < m_chrVRamBanks; ++i)
             {
                 printff("Loading 8k vram CHR Bank [%i]\n", i);
-                std::vector<ubyte> bank = std::vector<ubyte>(buffer.begin() + bankOffset,
+                std::vector<uint8> bank = std::vector<uint8>(buffer.begin() + bankOffset,
                                                                     buffer.begin() + (bankOffset + m_vramBankSize));
                 bankOffset += m_vramBankSize;
                 m_vramBanks.push_back(bank);
@@ -77,23 +77,23 @@ namespace ControlDeck
 
         return  true;
 	}
-    const std::vector<ubyte>& Cartridge::GetPRGBank(uint16 bankNumber)
+    const std::vector<uint8>& Cartridge::GetPRGBank(uint16 bankNumber)
     {
         if (bankNumber > m_romBanks.size())
         {
             throw("Unable to load bank from cartridge");
-            return std::vector<ubyte>();
+            return std::vector<uint8>();
         }
 
         return m_romBanks[bankNumber];
     }
 
-    const std::vector<ubyte>& Cartridge::GetCHRBank(uint16 bankNumber)
+    const std::vector<uint8>& Cartridge::GetCHRBank(uint16 bankNumber)
     {
         if (bankNumber > m_romBanks.size())
         {
             throw("Unable to load bank from cartridge");
-            return std::vector<ubyte>();
+            return std::vector<uint8>();
         }
 
         return m_vramBanks[bankNumber];

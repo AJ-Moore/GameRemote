@@ -1,5 +1,0 @@
-/usr/local/dev/GameRemote/CMakeFiles/edit_cache.dir
-/usr/local/dev/GameRemote/CMakeFiles/redrectangle.vpk.dir
-/usr/local/dev/GameRemote/CMakeFiles/redrectangle.self.dir
-/usr/local/dev/GameRemote/CMakeFiles/rebuild_cache.dir
-/usr/local/dev/GameRemote/CMakeFiles/redrectangle.dir

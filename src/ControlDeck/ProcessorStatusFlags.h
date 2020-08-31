@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Common.h"
+#include "../Common.h"
 
 /***Processor Status Bits************
 	bit 0 | C = Carry
