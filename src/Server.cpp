@@ -52,13 +52,20 @@ namespace GameRemote
 	{
 		bool sendFailed = true;
 
+		// temporary hack 
 		while (sendFailed)
 		{
-			m_engine->m_lock.lock();
-			const char* data = (char*)&m_engine->m_pixelBufferCompressed[0];
+			int byteCount = 0;
+
+			for (int i = 0; i < m_engine->m_chunks.size(); ++i)
+			{
+				m_engine->m_lock.lock();
+				const char* data = (char*)&m_engine->m_chunks[i][0];
+				int byteCount = sendto(socket, data, m_engine->m_chunks[i].size(), 0, (struct sockaddr*) & addr, addrlength);
+				m_engine->m_lock.unlock();
+			}
+
 			printf("Sending data!\n");
-			int byteCount = sendto(socket, data, m_engine->m_pixelBufferCompressed.size(), 0, (struct sockaddr*) & addr, addrlength);
-			m_engine->m_lock.unlock();
 
 			if (byteCount == SOCKET_ERROR)
 			{
@@ -77,7 +84,8 @@ namespace GameRemote
 			{
 				sendFailed = false;
 			}
-		}
+		}	
+
 		return true;
 	}
 

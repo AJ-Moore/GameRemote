@@ -87,15 +87,25 @@ namespace GameRemote
 		//int width = GetSystemMetrics(SM_CXVIRTUALSCREEN);
 		int width = 960; 
 		int height = 544;
-		m_pixelBuffer.resize(width * height * 4);
+		m_pixelBuffer.resize(VITA_WIDTH * VITA_HEIGHT * 4);
 #ifdef _WIN32
 		m_hdc = GetDC(NULL);
 		m_context = CreateCompatibleDC(m_hdc);
-		m_bitmap = CreateCompatibleBitmap(m_hdc, width, height);
+		m_bitmap = CreateCompatibleBitmap(m_hdc, VITA_WIDTH, VITA_HEIGHT);
 		
 		if (m_bitmap == nullptr)
 		{
 			printff("Failed to create gdi bitmap.\n");
+		}
+
+		// Allocate chunks
+		m_chunks.resize(m_chunkCount);
+		int chunkSize = (VITA_WIDTH * VITA_HEIGHT)/ m_chunkCount;
+
+		for (int i = 0; i < m_chunkCount; ++i)
+		{
+			// + 20 bytes for the header
+			m_chunks[i].resize(chunkSize + 20);
 		}
 #endif 
 
@@ -156,7 +166,8 @@ namespace GameRemote
 			printff("GetDIBits failed: %s\n", GetLastError());
 		}
 
-		CompressPixelBuffer();
+		CompressPixelBufferChunks();
+		//CompressPixelBuffer();
 		//DecompressPixelBuffer();
 
 		//if (CompressPixelBuffer())
@@ -172,6 +183,54 @@ namespace GameRemote
 		SDL_UpdateWindowSurface(m_sdlWindow);
 	}
 
+	bool Engine::CompressPixelBufferChunks()
+	{
+		m_lock.lock();
+		int chunkSize = (VITA_WIDTH * VITA_HEIGHT) / m_chunkCount;
+
+		for (int i = 0; i < m_chunks.size(); ++i)
+		{
+			unsigned long dataSize = chunkSize;
+			m_chunks[i].resize(dataSize + m_headerSize);
+
+			m_chunks[i][0] = BITMAP_CHUNK; /* ID */
+			m_chunks[i][2] = i; /* Chunk Index 16bit lower*/
+			m_chunks[i][3] = i >> 8; /* Chunk Index 16bit upper*/
+
+			int result = compress2(&m_chunks[i][m_headerSize], &dataSize, &m_pixelBuffer[dataSize * i], dataSize, m_compressionLevel);
+
+			if (result != Z_OK)
+			{
+				m_lock.unlock();
+				return false;
+			}
+
+			m_chunks[i].resize(dataSize + m_headerSize);
+		}
+
+		m_lock.unlock();
+		return false;
+	}
+
+	bool Engine::DeompressPixelBufferChunk()
+	{
+		m_lock.lock();
+		int chunkSize = (VITA_WIDTH * VITA_HEIGHT) / m_chunkCount;
+		unsigned long dataSize = chunkSize;
+
+		int chunkIndex = m_pixelBufferCompressed[2];
+
+		int result = uncompress(&m_pixelBuffer[chunkSize * chunkIndex], &dataSize, &m_pixelBufferCompressed[m_headerSize], chunkSize);
+		if (result == Z_OK)
+		{
+			m_lock.unlock();
+			return true;
+		}
+
+		m_lock.unlock();
+		return false;
+	}
+
 	bool Engine::CompressPixelBuffer()
 	{
 		m_lock.lock();
@@ -179,7 +238,7 @@ namespace GameRemote
 		unsigned long dataSize = m_pixelBuffer.size();
 		m_pixelBufferCompressed.resize(dataSize);
 
-		int result = compress2(&m_pixelBufferCompressed[0], &dataSize, &m_pixelBuffer[0], dataSize, 9);
+		int result = compress2(&m_pixelBufferCompressed[0], &dataSize, &m_pixelBuffer[0], dataSize, -1);
 
 		if (result == Z_OK)
 		{

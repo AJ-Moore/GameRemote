@@ -41,7 +41,7 @@ void GameRemote::Vita::Update()
 	//printff("%i\n", received_data);
 	m_engine->m_pixelBufferCompressed.resize(received_data);
 	m_engine->m_lock.unlock();
-	m_engine->DecompressPixelBuffer();
+	m_engine->DecompressPixelBufferChunk();
 }
 
 #define NET_PARAM_MEM_SIZE (1*1024*1024)
