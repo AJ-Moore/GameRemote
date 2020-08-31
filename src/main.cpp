@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
 	engine.Start();
 
 #ifdef PSVITA
-	sceKernelDelayThread(1 * 1000000); // Wait for 1 seconds
+	sceKernelDelayThread(10 * 1000000); // Wait for 10 seconds
 	sceKernelExitProcess(0);
 #endif
     return 0;
