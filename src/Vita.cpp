@@ -55,11 +55,20 @@ bool GameRemote::Vita::ConnectToServer()
 	sceNetInetPton(SCE_NET_AF_INET, m_serverAddr.c_str(), &server.sin_addr);
 	memset(server.sin_zero, 0, sizeof(server.sin_zero)); /* fill sin_zero with zeroes */
 
+	retval = sceNetConnect(m_socket, (SceNetSockaddr*)&server, sizeof(server));
+
+	if (retval < 0)
+	{
+		printff("Socket Error.");
+		return false;
+	}
+
 	return true;
 }
 
 void GameRemote::Vita::Shutdown()
 {
+	sceNetSocketClose(m_socket);
 }
 
 #endif
