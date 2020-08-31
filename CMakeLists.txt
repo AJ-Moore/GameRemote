@@ -21,6 +21,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 include_directories(
    src/
    src/ControlDeck/
+   src/TCP/
    ../samples/common/
 )
 
@@ -31,10 +32,14 @@ add_executable(${PROJECT_NAME}
   src/ControlDeck/Instruction.cpp
   src/ControlDeck/CPU.cpp
   src/ControlDeck/PPU.cpp
+  src/Vita.cpp
+  src/Server.cpp
+  src/TCP/TCPClient.cpp
   ../samples/common/debugScreen.c
 )
 
 target_link_libraries(${PROJECT_NAME}
+  z
   SDL2
   vita2d
   SceDisplay_stub
@@ -46,6 +51,8 @@ target_link_libraries(${PROJECT_NAME}
   SceAppMgr_stub
   SceTouch_stub
   SceHid_stub
+  SceNet_stub
+  SceSysmodule_stub
   m
 )
 
