@@ -1,14 +1,16 @@
 // Copyright © Allan Moore April 2020
 
-//#define PSVITA
+#define PSVITA
 
 #pragma once
 #ifdef PSVITA
+typedef unsigned char BYTE;
 #include <psp2/kernel/threadmgr.h>
 #include <psp2/kernel/processmgr.h>
 #include <psp2/net/net.h> 
+#include <psp2/sysmodule.h>
 #include <psp2/ctrl.h>
-//#include "debugScreen.h"
+#include "debugScreen.h"
 #define printff psvDebugScreenPrintf
 #else
 #define printff printf

@@ -1,6 +1,8 @@
 #pragma once
 
 #include "Common.h"
+
+#ifndef PSVITA
 #include "TCP/TCPClient.h"
 
 namespace GameRemote
@@ -33,3 +35,4 @@ namespace GameRemote
 		Server* server;
 	};
 }
+#endif

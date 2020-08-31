@@ -2,9 +2,14 @@
 
 #include "Common.h"
 #include "TCP/TCPClient.h"
+#include "Vita.h"
 
 namespace GameRemote
 {
+#ifdef PSVITA
+class Server{};
+#endif
+
 	enum {
 		VITA_WIDTH = 960,
 		VITA_HEIGHT = 544
@@ -36,11 +41,10 @@ namespace GameRemote
 		std::mutex m_lock;
 		SharedPtr<TCPClient> m_client;
 
-#ifdef _WIN32
-
 		std::vector<BYTE> m_pixelBuffer;
 		std::vector<BYTE> m_pixelBufferCompressed;
 		std::vector<BYTE> m_pixelBufferDecompressed;
+#ifdef _WIN32
 		HDC m_hdc = nullptr;
 		HDC m_context = nullptr;
 		HBITMAP m_bitmap = nullptr;

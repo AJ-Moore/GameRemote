@@ -83,12 +83,12 @@ namespace GameRemote
 
 	bool Engine::InitGDI()
 	{
-#ifdef _WIN32
 		//int height = GetSystemMetrics(SM_CYVIRTUALSCREEN);
 		//int width = GetSystemMetrics(SM_CXVIRTUALSCREEN);
 		int width = 960; 
 		int height = 544;
 		m_pixelBuffer.resize(width * height * 4);
+#ifdef _WIN32
 		m_hdc = GetDC(NULL);
 		m_context = CreateCompatibleDC(m_hdc);
 		m_bitmap = CreateCompatibleBitmap(m_hdc, width, height);

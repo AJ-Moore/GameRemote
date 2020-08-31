@@ -2,7 +2,7 @@
 //#define PSVITA
 #include "Common.h"
 #include "Engine.h"
-#include "ControlDeck/ControlDeck.h"
+//#include "ControlDeck/ControlDeck.h"
 
 int main(int argc, char *argv[])
 {
