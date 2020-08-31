@@ -12,6 +12,7 @@ namespace GameRemote
 	public:
 		virtual bool Init();
 		virtual void Update();
+		void ListenForPackets();
 		virtual void ListenForClients();
 
 	private:
@@ -21,8 +22,9 @@ namespace GameRemote
 		SOCKET m_acceptSocket = INVALID_SOCKET;
 		bool m_bRunning = false;
 
-		static DWORD WINAPI serverThread(LPVOID lpParam);
+		void serverThread(SOCKET socket);
 		bool SendData(SOCKET socket);
+		bool SendData(SOCKET socket, sockaddr_in addr, socklen_t addrlength);
 	};
 
 	class Thread_Params {

@@ -2,51 +2,82 @@
 
 #ifndef PSVITA
 
+#include <signal.h>
 #include "Server.h"
 #include "Engine.h"
 
 namespace GameRemote
 {
 	//Thread used for the communication between the server and the client. 
-	DWORD WINAPI Server::serverThread(LPVOID lpParam) {
-		Thread_Params* params = (Thread_Params*)lpParam;
+	void Server::serverThread(SOCKET socket)
+	{
 		bool threadRunning = true;
-		while (threadRunning && params->server->m_bRunning)
+		while (threadRunning && m_bRunning)
 		{
-			if (params->socket != INVALID_SOCKET)
+			if (socket != INVALID_SOCKET)
 			{
-				try
+				if (!SendData(socket))
 				{
-					params->server->SendData(params->socket);
-				}
-				catch (std::exception e)
-				{
-					printff("Sending data failed: %s \n", e.what());
 					threadRunning = false;
 					break;
 				}
 			}
+			// Sleep thread 
+			std::this_thread::sleep_for(std::chrono::milliseconds(10));
 		}
 
-		printff("Socket closed");
-		closesocket(params->socket);
-		std::cout << "Client Connection Closed!" << std::endl;
-		return 0;
+		printff("Socket closed, client connection closed.\n");
+		closesocket(socket);
 	}
 
 	bool Server::SendData(SOCKET socket)
 	{
 		m_engine->m_lock.lock();
 		const char* data = (char*)&m_engine->m_pixelBufferCompressed[0];
+		//signal(SIGPIPE, SIG_IGN);
+		printf("Sending data!\n");
 		int byteCount = send(socket, data, m_engine->m_pixelBufferCompressed.size(), 0);
 		m_engine->m_lock.unlock();
 
 		if (byteCount == SOCKET_ERROR)
 		{
-			printff("Send failed.");
+			printff("Send failed, Socket error.\n");
 			return false;
 		}
 
+		return true;
+	}
+
+	bool Server::SendData(SOCKET socket, sockaddr_in addr, socklen_t addrlength)
+	{
+		bool sendFailed = true;
+
+		while (sendFailed)
+		{
+			m_engine->m_lock.lock();
+			const char* data = (char*)&m_engine->m_pixelBufferCompressed[0];
+			printf("Sending data!\n");
+			int byteCount = sendto(socket, data, m_engine->m_pixelBufferCompressed.size(), 0, (struct sockaddr*) & addr, addrlength);
+			m_engine->m_lock.unlock();
+
+			if (byteCount == SOCKET_ERROR)
+			{
+				wchar_t* s = NULL;
+				FormatMessageW(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
+					NULL, WSAGetLastError(),
+					MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+					(LPWSTR)&s, 0, NULL);
+				printff("error %S\n", s);
+				LocalFree(s);
+
+				printff("Send failed, Socket error.\n");
+				//return false;
+			}
+			else
+			{
+				sendFailed = false;
+			}
+		}
 		return true;
 	}
 
@@ -73,7 +104,7 @@ namespace GameRemote
 		}
 
 		try {
-			m_listenSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+			m_listenSocket = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
 			if (this->m_listenSocket == INVALID_SOCKET)
 			{
 				throw  WSAGetLastError();
@@ -89,8 +120,10 @@ namespace GameRemote
 
 		sockaddr_in service;
 		IN_ADDR addr;
+		memset((char*)&service, 0, sizeof(service));
 		service.sin_family = AF_INET; // Family ivp4 (AF_INET)
-		service.sin_addr.s_addr = inet_pton(AF_INET, "localhost", &addr);
+		//service.sin_addr.s_addr = inet_pton(AF_INET, "localhost", &addr);
+		service.sin_addr.s_addr = htonl(INADDR_ANY);
 		service.sin_port = htons(m_port);
 
 		try {
@@ -112,25 +145,50 @@ namespace GameRemote
 			WSACleanup();
 			return false;
 		}
-		try {
-			if (listen(this->m_listenSocket, 1) == SOCKET_ERROR)
-				throw WSAGetLastError();
-			else
-				std::cout << "listen() is OK, waiting for connections..." << std::endl;
-		}
-		catch (int e) {
-			std::cout << "listen(): Error listening on socket " << e << std::endl;
-		}
+
+		// TCP listen server
+		//try {
+		//	if (listen(this->m_listenSocket, 1) == SOCKET_ERROR)
+		//		throw WSAGetLastError();
+		//	else
+		//		std::cout << "listen() is OK, waiting for connections..." << std::endl;
+		//}
+		//catch (int e) {
+		//	std::cout << "listen(): Error listening on socket " << e << std::endl;
+		//}
 
 		// Create thread to listen for clients.
-		std::thread listenThread(&Server::ListenForClients, this);
+		//std::thread listenThread(&Server::ListenForClients, this);
+
+
+		std::thread listenThread(&Server::ListenForPackets, this);
 		listenThread.detach();
 		return true;
 	}
 
 	void Server::Update()
+	{		
+	}
+
+	void Server::ListenForPackets()
 	{
-		
+		printff("Listening for packets\n");
+
+		while (m_bRunning)
+		{
+			// UDP Listen thread.
+			struct sockaddr_in addr;
+			socklen_t addrlen = sizeof(addr);
+			char buffer[2];
+			int recvlen = recvfrom(m_listenSocket, buffer, 2, 0, (struct sockaddr*) & addr, &addrlen);
+
+			if (recvlen == SOCKET_ERROR)
+			{
+				continue;
+			}
+
+			SendData(m_listenSocket, addr, addrlen);
+		}
 	}
 
 	//Listens for clients -> Will start a new thread to handle client communications.
@@ -151,16 +209,17 @@ namespace GameRemote
 				else 
 				{
 					std::cout << "Server: Client Connected!" << std::endl << std::endl;
-					CreateThread(NULL, 0, Server::serverThread, (LPVOID)(new Thread_Params(this, m_acceptSocket)), 0, &threadId);
+					std::thread serverThread(&Server::serverThread, this, m_acceptSocket);
+					serverThread.detach();
 				}
 			}
-			catch (int e) {
+			catch (int e)
+			{
 				std::cout << "Accept Failed: " << e << std::endl;
-
 			}
 		}
-		std::cout << "Server: No longer listening" << std::endl;
 
+		std::cout << "Server: No longer listening" << std::endl;
 	}
 
 	void Server::ShutDown()

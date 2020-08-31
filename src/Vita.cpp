@@ -41,7 +41,7 @@ bool GameRemote::Vita::ConnectToServer()
 	net_init_param.flags = 0;
 	sceNetInit(&net_init_param);
 
-	m_socket = sceNetSocket("ping_test", SCE_NET_AF_INET, SCE_NET_SOCK_STREAM, SCE_NET_IPPROTO_TCP);
+	m_socket = sceNetSocket("ping_test", SCE_NET_AF_INET, SCE_NET_SOCK_STREAM, SCE_NET_IPPROTO_UDP);
 
 	if (m_socket < 0)
 	{

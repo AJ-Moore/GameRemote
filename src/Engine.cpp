@@ -120,7 +120,6 @@ namespace GameRemote
 
 	void Engine::Render()
 	{
-return;
 #ifdef _WIN32
 
 		int height = GetSystemMetrics(SM_CYVIRTUALSCREEN);
@@ -158,6 +157,7 @@ return;
 		}
 
 		CompressPixelBuffer();
+		//DecompressPixelBuffer();
 
 		//if (CompressPixelBuffer())
 		//{
@@ -179,7 +179,7 @@ return;
 		unsigned long dataSize = m_pixelBuffer.size();
 		m_pixelBufferCompressed.resize(dataSize);
 
-		int result = compress2(&m_pixelBufferCompressed[0], &dataSize, &m_pixelBuffer[0], dataSize, 1);
+		int result = compress2(&m_pixelBufferCompressed[0], &dataSize, &m_pixelBuffer[0], dataSize, 9);
 
 		if (result == Z_OK)
 		{
