@@ -120,6 +120,7 @@ namespace GameRemote
 
 	void Engine::Render()
 	{
+return;
 #ifdef _WIN32
 
 		int height = GetSystemMetrics(SM_CYVIRTUALSCREEN);

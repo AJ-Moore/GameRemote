@@ -18,7 +18,7 @@ void GameRemote::Vita::Update()
 
 	if (received_data < 1)
 	{
-		printff("Receive error!");
+//		printff("Receive error!");
 		m_engine->m_lock.unlock();
 		return;
 	}
