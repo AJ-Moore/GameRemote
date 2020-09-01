@@ -100,7 +100,7 @@ namespace GameRemote
 
 		// Allocate chunks
 		m_chunks.resize(m_chunkCount);
-		int chunkSize = (VITA_WIDTH * VITA_HEIGHT)/ m_chunkCount;
+		int chunkSize = (VITA_WIDTH * VITA_HEIGHT * 4)/ m_chunkCount;
 
 		for (int i = 0; i < m_chunkCount; ++i)
 		{
@@ -186,7 +186,7 @@ namespace GameRemote
 	bool Engine::CompressPixelBufferChunks()
 	{
 		m_lock.lock();
-		int chunkSize = (VITA_WIDTH * VITA_HEIGHT) / m_chunkCount;
+		int chunkSize = (VITA_WIDTH * VITA_HEIGHT * 4) / m_chunkCount;
 
 		for (int i = 0; i < m_chunks.size(); ++i)
 		{
@@ -212,10 +212,10 @@ namespace GameRemote
 		return false;
 	}
 
-	bool Engine::DeompressPixelBufferChunk()
+	bool Engine::DecompressPixelBufferChunk()
 	{
 		m_lock.lock();
-		int chunkSize = (VITA_WIDTH * VITA_HEIGHT) / m_chunkCount;
+		int chunkSize = (VITA_WIDTH * VITA_HEIGHT * 4) / m_chunkCount;
 		unsigned long dataSize = chunkSize;
 
 		int chunkIndex = m_pixelBufferCompressed[2];

@@ -37,7 +37,7 @@ class Server{};
 		void Render();
 
 		bool CompressPixelBufferChunks();
-		bool DeompressPixelBufferChunk();
+		bool DecompressPixelBufferChunk();
 		bool CompressPixelBuffer();
 		bool DecompressPixelBuffer();
 
@@ -51,15 +51,14 @@ class Server{};
 		std::vector<BYTE> m_pixelBuffer;
 		std::vector<BYTE> m_pixelBufferCompressed;
 		std::vector<BYTE> m_pixelBufferDecompressed;
-
+		
 		// data divisions, must be divisble
 		const int m_chunkCount = 16;
 		const int m_headerSize = 20;
 		const int m_compressionLevel = 1;
 
-#ifdef _WIN32
 		std::vector<std::vector<BYTE>> m_chunks;
-
+#ifdef _WIN32
 		HDC m_hdc = nullptr;
 		HDC m_context = nullptr;
 		HBITMAP m_bitmap = nullptr;

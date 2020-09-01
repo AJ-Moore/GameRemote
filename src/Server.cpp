@@ -53,8 +53,9 @@ namespace GameRemote
 		bool sendFailed = true;
 
 		// temporary hack 
-		while (sendFailed)
+		while (sendFailed || true)
 		{
+			std::this_thread::sleep_for(std::chrono::milliseconds(30));
 			int byteCount = 0;
 
 			for (int i = 0; i < m_engine->m_chunks.size(); ++i)
