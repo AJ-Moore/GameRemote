@@ -18,6 +18,7 @@ namespace GameRemote
 		bool ConnectToServer();
 		void Shutdown();
 
+		bool m_bConnected = false;
 		int32_t m_socket;
 		std::string m_serverAddr = "192.168.0.6";
 		SceNetSockaddrIn server;
