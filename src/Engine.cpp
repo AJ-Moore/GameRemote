@@ -63,18 +63,17 @@ namespace GameRemote
 		rmask = 0xff000000;
 		gmask = 0x00ff0000;
 		bmask = 0x0000ff00;
-		amask = 0x000000ff;
+		amask = 0x00;
 #else
 		rmask = 0x000000ff;
 		gmask = 0x0000ff00;
 		bmask = 0x00ff0000;
-		amask = 0xff000000;
+		amask = 0x00;
 #endif
 
 		m_sdlWindow = SDL_CreateWindow("GameRemote", 400, 400, VITA_WIDTH, VITA_HEIGHT, SDL_WINDOW_RESIZABLE);
-		//m_sdlSurface = SDL_CreateRGBSurface(0, 960, 544, 32, 0xff0000, 0x00ff00, 0x0000ff, 0x0);
 		m_sdlSurface = SDL_CreateRGBSurface(0, 960, 544, 32, rmask, gmask, bmask, amask);
-		m_sdlSurface = SDL_ConvertSurfaceFormat(m_sdlSurface, SDL_PIXELFORMAT_BGRA32, 0);
+		m_sdlSurface = SDL_ConvertSurfaceFormat(m_sdlSurface, SDL_PIXELFORMAT_BGR24, 0);
 		SDL_FillRect(m_sdlSurface, NULL, 0x00000000);
 		SDL_UpdateWindowSurface(m_sdlWindow);
 
@@ -87,7 +86,7 @@ namespace GameRemote
 		//int width = GetSystemMetrics(SM_CXVIRTUALSCREEN);
 		int width = 960; 
 		int height = 544;
-		m_pixelBuffer.resize(VITA_WIDTH * VITA_HEIGHT * 4);
+		m_pixelBuffer.resize(VITA_WIDTH * VITA_HEIGHT * 3);
 #ifdef _WIN32
 		m_hdc = GetDC(NULL);
 		m_context = CreateCompatibleDC(m_hdc);
@@ -100,7 +99,7 @@ namespace GameRemote
 
 		// Allocate chunks
 		m_chunks.resize(m_chunkCount);
-		int chunkSize = (VITA_WIDTH * VITA_HEIGHT * 4)/ m_chunkCount;
+		int chunkSize = (VITA_WIDTH * VITA_HEIGHT * 3)/ m_chunkCount;
 
 		for (int i = 0; i < m_chunkCount; ++i)
 		{
@@ -144,9 +143,6 @@ namespace GameRemote
 			printff("BitBlt failed: %s\n", GetLastError());
 		}
 
-		BITMAP bmpScreen;
-		GetObject(m_bitmap, sizeof(BITMAP), &bmpScreen);
-
 		BITMAPINFOHEADER bmi;
 		bmi.biSize = sizeof(BITMAPINFOHEADER);
 		bmi.biPlanes = 1;
@@ -154,13 +150,12 @@ namespace GameRemote
 		bmi.biHeight = -targetHeight;
 		bmi.biWidth = targetWidth;
 		bmi.biSizeImage = 0;
-		bmi.biBitCount = 32;
+		bmi.biBitCount = 24;
 		bmi.biClrImportant = 0;
 		bmi.biXPelsPerMeter = 0;
 		bmi.biYPelsPerMeter = 0;
 		bmi.biClrUsed = 0;
 
-		//GetDIBits(m_context, m_bitmap, 0, targetHeight, nullptr, (BITMAPINFO*)&bmi, DIB_RGB_COLORS);
 		if (GetDIBits(m_context, m_bitmap, 0, targetHeight, &m_pixelBuffer[0], (BITMAPINFO*)&bmi, DIB_RGB_COLORS) == 0)
 		{
 			printff("GetDIBits failed: %s\n", GetLastError());
@@ -181,12 +176,13 @@ namespace GameRemote
 		SDL_memcpy(m_sdlSurface->pixels, &m_pixelBuffer[0], sizeof(BYTE) * m_pixelBuffer.size());
 		SDL_BlitScaled(m_sdlSurface, nullptr, SDL_GetWindowSurface(m_sdlWindow), nullptr);
 		SDL_UpdateWindowSurface(m_sdlWindow);
+		//std::this_thread::sleep_for(std::chrono::milliseconds(10));
 	}
 
 	bool Engine::CompressPixelBufferChunks()
 	{
 		m_lock.lock();
-		int chunkSize = (VITA_WIDTH * VITA_HEIGHT * 4) / m_chunkCount;
+		int chunkSize = (VITA_WIDTH * VITA_HEIGHT * 3) / m_chunkCount;
 
 		for (int i = 0; i < m_chunks.size(); ++i)
 		{
@@ -196,6 +192,8 @@ namespace GameRemote
 			m_chunks[i][0] = BITMAP_CHUNK; /* ID */
 			m_chunks[i][2] = i; /* Chunk Index 16bit lower*/
 			m_chunks[i][3] = i >> 8; /* Chunk Index 16bit upper*/
+			m_chunks[i][4] = m_chunkCount;
+			m_chunks[i][5] = m_chunkCount >> 8;
 
 			int result = compress2(&m_chunks[i][m_headerSize], &dataSize, &m_pixelBuffer[dataSize * i], dataSize, m_compressionLevel);
 
@@ -215,10 +213,12 @@ namespace GameRemote
 	bool Engine::DecompressPixelBufferChunk()
 	{
 		m_lock.lock();
-		int chunkSize = (VITA_WIDTH * VITA_HEIGHT * 4) / m_chunkCount;
-		unsigned long dataSize = chunkSize;
 
 		int chunkIndex = m_pixelBufferCompressed[2];
+		m_chunkCount = m_pixelBufferCompressed[4];
+
+		int chunkSize = (VITA_WIDTH * VITA_HEIGHT * 4) / m_chunkCount;
+		unsigned long dataSize = chunkSize;
 
 		int result = uncompress(&m_pixelBuffer[chunkSize * chunkIndex], &dataSize, &m_pixelBufferCompressed[m_headerSize], chunkSize);
 		if (result == Z_OK)

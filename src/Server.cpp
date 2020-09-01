@@ -55,18 +55,34 @@ namespace GameRemote
 		// temporary hack 
 		while (sendFailed || true)
 		{
-			std::this_thread::sleep_for(std::chrono::milliseconds(30));
+			std::this_thread::sleep_for(std::chrono::milliseconds(1));
 			int byteCount = 0;
+
+			int* randomPacketOrder = new int[m_engine->m_chunks.size()]();
+
+			// Randomize packet order.
+			for (int i = 0; i < m_engine->m_chunks.size(); ++i)
+			{
+				randomPacketOrder[i] = i;
+			}
+
+			for (int i = 0; i < m_engine->m_chunks.size(); ++i)
+			{
+				int rnd = rand() % m_engine->m_chunks.size();
+				int tmp = randomPacketOrder[i];
+				randomPacketOrder[i] = randomPacketOrder[rnd];
+				randomPacketOrder[rnd] = tmp;
+			}
 
 			for (int i = 0; i < m_engine->m_chunks.size(); ++i)
 			{
 				m_engine->m_lock.lock();
-				const char* data = (char*)&m_engine->m_chunks[i][0];
-				int byteCount = sendto(socket, data, m_engine->m_chunks[i].size(), 0, (struct sockaddr*) & addr, addrlength);
+				const char* data = (char*)&m_engine->m_chunks[randomPacketOrder[i]][0];
+				int byteCount = sendto(socket, data, m_engine->m_chunks[randomPacketOrder[i]].size(), 0, (struct sockaddr*) & addr, addrlength);
 				m_engine->m_lock.unlock();
 			}
 
-			printf("Sending data!\n");
+			//printf("Sending data!\n");
 
 			if (byteCount == SOCKET_ERROR)
 			{

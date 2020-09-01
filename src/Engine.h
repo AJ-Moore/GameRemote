@@ -53,7 +53,7 @@ class Server{};
 		std::vector<BYTE> m_pixelBufferDecompressed;
 		
 		// data divisions, must be divisble
-		const int m_chunkCount = 16;
+		int m_chunkCount = 128;
 		const int m_headerSize = 20;
 		const int m_compressionLevel = 1;
 

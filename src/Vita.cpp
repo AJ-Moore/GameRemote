@@ -14,34 +14,40 @@ void GameRemote::Vita::Update()
 {
 	m_engine->m_lock.lock();
 
-	int32_t sent = sceNetSendto(m_socket, ":)", 2, 0, (SceNetSockaddr*)&server, sizeof(SceNetSockaddr));
-
-	if (sent < 1)
+	if (!m_bConnected)
 	{
-		printff("Send failed.");
-		m_engine->m_lock.unlock();
-		return;
-	}
+		int32_t sent = sceNetSendto(m_socket, ":)", 2, 0, (SceNetSockaddr*)&server, sizeof(SceNetSockaddr));
 
-	printff("sent: %i\n", sent);
+		if (sent < 1)
+		{
+			printff("Send failed.");
+			m_engine->m_lock.unlock();
+			return;
+		}
+
+		m_bConnected = true;
+	}
 
 	SceNetSockaddr from;
 	uint32_t fromlen = sizeof(from);
 
-	m_engine->m_pixelBufferCompressed.resize(m_engine->m_pixelBuffer.size());
-	int32_t received_data = sceNetRecvfrom(m_socket, &m_engine->m_pixelBufferCompressed[0], m_engine->m_pixelBuffer.size(), 0, &from, (unsigned int*)&fromlen);
-
-	if (received_data < 1)
+	for (int i = 0; i < m_engine->m_chunkCount; i++)
 	{
-		printff("sceNetRecv error: %s\n");
-		m_engine->m_lock.unlock();
-		return;
-	}
+		m_engine->m_pixelBufferCompressed.resize(m_engine->m_pixelBuffer.size());
+		int32_t received_data = sceNetRecvfrom(m_socket, &m_engine->m_pixelBufferCompressed[0], m_engine->m_pixelBuffer.size(), 0, &from, (unsigned int*)&fromlen);
 
-	//printff("%i\n", received_data);
-	m_engine->m_pixelBufferCompressed.resize(received_data);
-	m_engine->m_lock.unlock();
-	m_engine->DecompressPixelBufferChunk();
+		if (received_data < 1)
+		{
+			printff("sceNetRecv error: %s\n");
+			m_engine->m_lock.unlock();
+			return;
+		}
+
+		//printff("%i\n", received_data);
+		m_engine->m_pixelBufferCompressed.resize(received_data);
+		m_engine->m_lock.unlock();
+		m_engine->DecompressPixelBufferChunk();
+	}
 }
 
 #define NET_PARAM_MEM_SIZE (1*1024*1024)
