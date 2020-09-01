@@ -43,10 +43,24 @@ void GameRemote::Vita::Update()
 			return;
 		}
 
+		int headerId = m_engine->m_pixelBufferCompressed[0];
+
 		//printff("%i\n", received_data);
 		m_engine->m_pixelBufferCompressed.resize(received_data);
 		m_engine->m_lock.unlock();
-		m_engine->DecompressPixelBufferChunk();
+
+		switch (headerId)
+		{
+		case GameRemote::HEADER::BITMAP_CHUNK:
+			m_engine->UnmakeUncompressedChunk();
+			break;
+		case GameRemote::HEADER::BITMAP_CHUNK_COMPRESSED:
+			m_engine->DecompressPixelBufferChunk();
+			break;
+		default:
+			printff("Invalid Header!\n");
+		}
+
 	}
 }
 

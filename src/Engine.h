@@ -17,6 +17,7 @@ class Server{};
 
 	enum HEADER {
 		BITMAP_CHUNK = 0x1,
+		BITMAP_CHUNK_COMPRESSED = 0x2,
 		NONE = 0x0,
 	};
 
@@ -36,6 +37,9 @@ class Server{};
 		void Update();
 		void Render();
 
+		bool MakeUncompressedChunks();
+		bool UnmakeUncompressedChunk();
+
 		bool CompressPixelBufferChunks();
 		bool DecompressPixelBufferChunk();
 		bool CompressPixelBuffer();
@@ -53,7 +57,7 @@ class Server{};
 		std::vector<BYTE> m_pixelBufferDecompressed;
 		
 		// data divisions, must be divisble
-		int m_chunkCount = 128;
+		int m_chunkCount = 64;
 		const int m_headerSize = 20;
 		const int m_compressionLevel = 1;
 
