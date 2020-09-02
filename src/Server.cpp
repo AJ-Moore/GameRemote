@@ -55,7 +55,6 @@ namespace GameRemote
 		// temporary hack 
 		while (sendFailed || true)
 		{
-			std::this_thread::sleep_for(std::chrono::milliseconds(1));
 			int byteCount = 0;
 
 			int* randomPacketOrder = new int[m_engine->m_chunks.size()]();
@@ -79,6 +78,7 @@ namespace GameRemote
 				m_engine->m_lock.lock();
 				const char* data = (char*)&m_engine->m_chunks[randomPacketOrder[i]][0];
 				int byteCount = sendto(socket, data, m_engine->m_chunks[randomPacketOrder[i]].size(), 0, (struct sockaddr*) & addr, addrlength);
+				std::this_thread::sleep_for(std::chrono::milliseconds(600/ m_engine->m_chunks.size()));
 				m_engine->m_lock.unlock();
 			}
 

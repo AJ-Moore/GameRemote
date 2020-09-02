@@ -21,6 +21,11 @@ class Server{};
 		NONE = 0x0,
 	};
 
+	enum HeaderFlags
+	{
+		VBlank = 0x1,
+	};
+
 	class Engine
 	{
 		friend class Vita;
@@ -37,11 +42,13 @@ class Server{};
 		void Update();
 		void Render();
 
+		bool UnmakeAll();
+
 		bool MakeUncompressedChunks();
 		bool UnmakeUncompressedChunk();
 
 		bool CompressPixelBufferChunks();
-		bool DecompressPixelBufferChunk();
+		bool DecompressPixelBufferChunk(BYTE* chunk);
 		bool CompressPixelBuffer();
 		bool DecompressPixelBuffer();
 
@@ -57,7 +64,8 @@ class Server{};
 		std::vector<BYTE> m_pixelBufferDecompressed;
 		
 		// data divisions, must be divisble
-		int m_chunkCount = 64;
+		const bool m_bUseCompression = true;
+		int m_chunkCount = 16;
 		const int m_headerSize = 20;
 		const int m_compressionLevel = 1;
 

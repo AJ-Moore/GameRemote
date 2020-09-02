@@ -161,23 +161,40 @@ namespace GameRemote
 			printff("GetDIBits failed: %s\n", GetLastError());
 		}
 
-		MakeUncompressedChunks();
-		//CompressPixelBufferChunks();
-		//CompressPixelBuffer();
-		//DecompressPixelBuffer();
+		if (m_bUseCompression)
+		{
+			CompressPixelBufferChunks();
+		}
+		else
+		{
+			MakeUncompressedChunks();
+			m_pixelBuffer.clear();
+			m_pixelBuffer.resize(VITA_HEIGHT * VITA_WIDTH * 3);
+			UnmakeAll();
+		}
+		//
 
-		//if (CompressPixelBuffer())
-		//{
-		//	if (DecompressPixelBuffer())
-		//	{
-		//		SDL_memcpy(m_sdlSurface->pixels, &m_pixelBufferDecompressed[0], sizeof(BYTE) * m_pixelBufferDecompressed.size());
-		//	}
-		//}
 #endif
-		SDL_memcpy(m_sdlSurface->pixels, &m_pixelBuffer[0], sizeof(BYTE) * m_pixelBuffer.size());
+		//SDL_memcpy(m_sdlSurface->pixels, &m_pixelBuffer[0], sizeof(BYTE) * m_pixelBuffer.size());
 		SDL_BlitScaled(m_sdlSurface, nullptr, SDL_GetWindowSurface(m_sdlWindow), nullptr);
 		SDL_UpdateWindowSurface(m_sdlWindow);
 		//std::this_thread::sleep_for(std::chrono::milliseconds(10));
+	}
+
+	bool Engine::UnmakeAll()
+	{
+		for (int i = 0; i < m_chunks.size(); ++i)
+		{
+			m_lock.lock();
+
+			int chunkIndex = i;
+			int chunkSize = (VITA_WIDTH * VITA_HEIGHT * 3) / m_chunkCount;
+			memcpy(&m_pixelBuffer[chunkSize * chunkIndex], &m_chunks[i][m_headerSize], chunkSize);
+
+			m_lock.unlock();
+		}
+
+		return true;
 	}
 
 	bool Engine::MakeUncompressedChunks()
@@ -198,11 +215,11 @@ namespace GameRemote
 			m_chunks[i][6] = dataSize; /* chunk size bytes lower*/
 			m_chunks[i][7] = dataSize >> 8; /* chunk size bytes upper*/
 
-			memcpy(&m_chunks[i][m_headerSize], &m_pixelBuffer[dataSize * i], dataSize);
+			memcpy(&m_chunks[i][m_headerSize], &m_pixelBuffer[dataSize * i], chunkSize);
 		}
 
 		m_lock.unlock();
-		return false;
+		return true;
 	}
 
 	bool Engine::UnmakeUncompressedChunk()
@@ -213,12 +230,10 @@ namespace GameRemote
 		m_chunkCount = m_pixelBufferCompressed[4];
 
 		int chunkSize = (VITA_WIDTH * VITA_HEIGHT * 3) / m_chunkCount;
-		unsigned long dataSize = chunkSize;
-
-		memcpy(&m_pixelBuffer[chunkSize * chunkIndex], &m_pixelBufferCompressed[m_headerSize], chunkSize);
+		SDL_memcpy((BYTE*)m_sdlSurface->pixels + (chunkSize * chunkIndex), &m_pixelBufferCompressed[m_headerSize], chunkSize);
 
 		m_lock.unlock();
-		return false;
+		return true;
 	}
 
 	bool Engine::CompressPixelBufferChunks()
@@ -250,23 +265,26 @@ namespace GameRemote
 			m_chunks[i].resize(dataSize + m_headerSize);
 		}
 
+		m_chunks[m_chunks.size() - 1][19] |= HeaderFlags::VBlank;
+
 		m_lock.unlock();
 		return false;
 	}
 
-	bool Engine::DecompressPixelBufferChunk()
+	bool Engine::DecompressPixelBufferChunk(BYTE* chunk)
 	{
 		m_lock.lock();
 
-		int chunkIndex = m_pixelBufferCompressed[2];
-		m_chunkCount = m_pixelBufferCompressed[4];
+		int chunkIndex = chunk[2];
+		m_chunkCount = chunk[4];
 
 		int chunkSize = (VITA_WIDTH * VITA_HEIGHT * 3) / m_chunkCount;
 		unsigned long dataSize = chunkSize;
 
-		int compressedSize = m_pixelBufferCompressed[6] | (m_pixelBufferCompressed[7] << 8);
+		int compressedSize = chunk[6] | (chunk[7] << 8);
 
-		int result = uncompress(&m_pixelBuffer[chunkSize * chunkIndex], &dataSize, &m_pixelBufferCompressed[m_headerSize], compressedSize);
+		int result = uncompress((BYTE*)m_sdlSurface->pixels + chunkSize * chunkIndex, &dataSize, &chunk[m_headerSize], compressedSize);
+
 		if (result == Z_OK)
 		{
 			m_lock.unlock();
